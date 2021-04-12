@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?= base_url()           ?>assets/backend/css/bootstrap.min.css">
     <title>Document</title>
 
     <style>
@@ -20,12 +20,12 @@
 </head>
 
 <body>
-
+    <script>
+        var base_url = '<?= base_url() ?>'
+    </script>
     <div class="container-lg">
         <div class="row justify-content-center">
-
             <div class="col-xl-6 col-lg-12 col-md-9">
-
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
@@ -34,21 +34,18 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="form-login" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="email" class="form-control form-control-user" id="email_user" name="email_user" placeholder="Silahkan masukan email...">
+                                            <small class="form-text text-danger"><?= $this->form_validation->error('email_user'); ?></small>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" class="form-control form-control-user" id="password_user" name="password_user" placeholder="Password">
+                                            <small class="form-text text-danger"><?= $this->form_validation->error('password_user'); ?></small>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" id="auth_button">
                                             Login
                                         </button>
                                     </form>
@@ -64,12 +61,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 
 </body>
+
+
+<script src="<?= base_url() ?>assets/backend/js/jquery-3.5.1.min.js"></script>
+<script src="<?= base_url() ?>js/auth.js"></script>
+<script src="<?= base_url() ?>assets/backend/js/bootstrap.min.js"></script>
+<script src="<?= base_url() ?>assets/backend/js/sweetalert2.all.min.js"></script>
+
+
 
 </html>
