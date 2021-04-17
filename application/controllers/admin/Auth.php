@@ -7,11 +7,12 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Auth_model');
-        $this->load->library('session');
+      
     }
     public function index()
     {
-        $this->load->view('admin/auth/index.php');
+        $data['judul'] = 'Halaman Login';
+        $this->load->view('backend/auth/index', $data);
     }
     public function login()
     {
@@ -26,7 +27,8 @@ class Auth extends CI_Controller
                     $data = [
                         'email_user' => $user['email_user'],
                         'id_role' => $user['id_role'],
-                        'id_user' => $user['id_user']
+                        'id_user' => $user['id_user'],
+                        'nama_user' => $user['nama_user']
                     ];
                     $this->session->set_userdata($data);
                     if ($user['id_role'] == 1) {

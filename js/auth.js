@@ -20,10 +20,9 @@ $(document).ready(function(){
                     success: function (data){
                         if(data.status==true){
                             sukses(data.alert);
-                            location.href = base_url + 'admin/dashboard'
+                            location.href = base_url + 'admin/admin'
                         }else{
                             error(data.alert);
-                            location.href = base_url + 'admin/auth'
                         }
                     }
                 })

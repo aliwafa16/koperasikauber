@@ -4,8 +4,9 @@ class Home extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('user/templates/user_header.php');
-        $this->load->view('user/home/index.php');
-        $this->load->view('user/templates/user_footer.php');
+        $data['judul'] = 'Kauber - Koperasi Jasa Angkutan Usaha Bersama';
+        $this->load->view('frontend/templates/user_header.php', $data);
+        $this->load->view('frontend/home/index.php');
+        $this->load->view('frontend/templates/user_footer.php');
     }
 }
