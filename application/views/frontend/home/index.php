@@ -26,7 +26,7 @@
                  </li>
                  <li><a href="#blog">Blog</a></li>
                  <li><a href="#contact">Contact</a></li>
-                 <li><a href="<?php base_url() ?>admin/auth/index">Masuk</a></li>
+                 <li><a href="<?php base_url() ?>auth">Masuk</a></li>
                  <li><a href="">Daftar</a></li>
              </ul>
          </nav><!-- #nav-menu-container -->

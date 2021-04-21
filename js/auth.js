@@ -20,7 +20,7 @@ $(document).ready(function(){
                     success: function (data){
                         if(data.status==true){
                             sukses(data.alert);
-                            location.href = base_url + 'admin/admin'
+                            location.href = base_url + 'dashboard'
                         }else{
                             error(data.alert);
                         }
