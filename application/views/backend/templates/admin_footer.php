@@ -1,4 +1,5 @@
 <!--footer start-->
+
 <footer class="site-footer">
     <div class="text-center">
         <p>
@@ -24,7 +25,7 @@
 <script src="<?= base_url('assets/backend/admin/') ?>lib/jquery/jquery.min.js"></script>
 
 <script src="<?= base_url('assets/backend/admin/') ?>lib/bootstrap/js/bootstrap.min.js"></script>
-<script class="<?= base_url('assets/backend/admin/') ?>include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+<script class="include" type="text/javascript" src="<?= base_url('assets/backend/admin/') ?>lib/jquery.dcjqaccordion.2.7.js"></script>
 <script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.scrollTo.min.js"></script>
 <script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.nicescroll.js" type="text/javascript"></script>
 <script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.sparkline.js"></script>
@@ -97,6 +98,7 @@
         console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
 </script>
+
 </body>
 
 </html>

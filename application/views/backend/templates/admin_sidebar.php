@@ -29,17 +29,21 @@ foreach ($menu1 as $key) {
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-            <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+            <p class="centered"><a href="profile.html"><img src="<?= base_url() ?>assets/backend/img/images.png" class="img-circle" width="80"></a></p>
             <h5 class="centered"><?= $this->session->userdata('nama_user') ?></h5>
             <?php foreach ($menu1 as $key) : ?>
                 <li class="mt">
                     <div class="sidebar-heading"><?= $key['nama_menu'] ?></div>
                     <?php foreach ($key['menuChild'] as $key2) : ?>
-                        <a class="" href="<?= base_url() . $key2['link_menu'] ?>">
-                            <i class="<?= $key2['icon_menu'] ?>"></i>
-                            <span><?= $key2['nama_menu'] ?></span>
-                        </a>
-                    <?php endforeach; ?>
+                        <?php if ($title == $key2['nama_menu']) : ?>
+                            <a class="active" href="<?= base_url() . $key2['link_menu'] ?>" id="menubar">
+                            <?php else : ?>
+                                <a class="" href="<?= base_url() . $key2['link_menu'] ?>" id="menubar">
+                                <?php endif; ?>
+                                <i class="<?= $key2['icon_menu'] ?>"></i>
+                                <span><?= $key2['nama_menu'] ?></span>
+                                </a>
+                            <?php endforeach; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -47,3 +51,10 @@ foreach ($menu1 as $key) {
     </div>
 </aside>
 <!--sidebar end-->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script>
+    $('#menubar').on('click', function() {
+        $('#menubar').removeClass('active');
+        $(this).addClass('active');
+    })
+</script>

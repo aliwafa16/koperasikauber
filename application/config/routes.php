@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['auth'] ='admin/auth/index';
+$route['manajemenData/(:any)'] = 'manajemenData/index/$1';

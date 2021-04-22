@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title><?= $title ?></title>
+  <title><?= $title ?> - Kauber</title>
 
   <!-- Favicons -->
   <link href="<?= base_url() ?>assets/frontend/img/icon2.png" rel="icon">
