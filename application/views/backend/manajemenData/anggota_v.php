@@ -16,7 +16,7 @@
                  </div>
                  <div class="row">
                      <div class="col">
-                         <table class="table table-hover tableBarang">
+                         <table class="table table-hover" id="Table_Anggota">
                              <thead class="thead-light">
                                  <tr>
                                      <th scope="col">No</th>
@@ -38,3 +38,4 @@
      <!-- /wrapper -->
  </section>
  <!-- /MAIN CONTENT -->
+ <script src="<?= base_url() ?>js/anggota.js"></script>

@@ -22,6 +22,7 @@
   <!-- Custom styles for this template -->
   <link href="<?= base_url('assets/backend/admin/') ?>css/style.css" rel="stylesheet">
   <link href="<?= base_url('assets/backend/admin/') ?>css/style-responsive.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?= base_url() ?>DataTables/datatables.min.css">
   <script src="<?= base_url('assets/backend/admin/') ?>lib/chart-master/Chart.js"></script>
 
   <!-- =======================================================

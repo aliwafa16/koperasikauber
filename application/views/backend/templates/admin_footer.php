@@ -36,6 +36,7 @@
 <!--script for this page-->
 <script src="<?= base_url('assets/backend/admin/') ?>lib/sparkline-chart.js"></script>
 <script src="<?= base_url('assets/backend/admin/') ?>lib/zabuto_calendar.js"></script>
+<script src="<?= base_url() ?>DataTables/datatables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         var unique_id = $.gritter.add({
