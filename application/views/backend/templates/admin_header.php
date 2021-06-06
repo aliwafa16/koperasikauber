@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="<?= base_url() ?>DataTables/datatables.min.css">
   <script src="<?= base_url('assets/backend/admin/') ?>lib/chart-master/Chart.js"></script>
 
+
+
+
+
   <!-- =======================================================
     Template Name: Dashio
     Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
@@ -32,3 +36,7 @@
     License: https://templatemag.com/license/
   ======================================================= -->
 </head>
+
+<script>
+    const base_url = '<?= base_url() ?>'
+</script>
