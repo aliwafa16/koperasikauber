@@ -47,6 +47,11 @@ class ManajemenData extends CI_Controller
         echo json_encode($result);
     }
 
+    public function getAnggotaByID($id){
+        $result = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row();
+        echo json_encode($result);
+    }
+
     public function getKodeAnggota()
     {
         $this->db->select_max('kode_anggota');
@@ -125,6 +130,16 @@ class ManajemenData extends CI_Controller
             }
             echo json_encode($result);
         }
+    }
+
+    public function editAnggota(){
+        $id = $this->input->post('id_anggota');
+
+        $data = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row();
+
+        var_dump($data);
+        die;
+
     }
 
     private function _foto()

@@ -75,7 +75,7 @@ function getAllAnggota(){
               return `<div class="row">
                         <div class="col-md-12">
                             <a href="${base_url}ManajemenData/detailAnggota/${full.id_anggota}" type="button" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-info"></i></a>
-                            <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                            <button onclick="edit_anggota(${full.id_anggota})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
                             <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                         </div>
                     </div>`
@@ -250,6 +250,42 @@ function getAllNonAnggota(){
 })
 }
 
+function edit_anggota(id){
+  console.log(id);
+  $('#form-anggota')[0].reset();
+  $('#modalAnggota').modal('show');
+  $('#modalAnggotaLabel').text('Edit Data Anggota');
+  $('#submit_anggota').text('Edit Data');
+  $('#cancel_anggota').text('Batal')
+  $('#submit_anggota').attr('disabled', false)
+  $.ajax({
+   url : base_url+'ManajemenData/getAnggotaByID/'+id,
+   type : 'POST',
+   dataType : 'JSON',
+    success : function (data){
+
+    var html = `<img src="${base_url}assets/foto_anggota/${data.foto_anggota}" alt=""  width="50%" hight="50%" style="border-radius:10%">`
+    console.log(data);
+    $('#id_anggota').val(data.id_anggota);
+    $('#kode_anggota').val(data.kode_anggota);
+    $('#nama_anggota').val(data.nama_anggota);
+    $('#nik_anggota').val(data.nik_anggota);
+    $('#tempat_lahir').val(data.tempat_lahir);
+    $('#tanggal_lahir').val(data.tanggal_lahir);
+    $('#pekerjaan').val(data.pekerjaan);
+    $('#no_telp').val(data.no_telp);
+    $('#alamat').val(data.alamat);
+    $('#kelurahan').val(data.kelurahan);
+    $('#kecamatan').val(data.kecamatan);
+    $('#kota_kab').val(data.kota_kab);
+    $('#keterangan').val(data.keterangan);
+    $('#created_at').val(data.created_at);
+    $('#is_active').val(data.is_active);
+    $('#preview_foto').html(html);
+    }
+  })
+}
+
 
 function addAnggota(){
   save = 'add';
@@ -277,58 +313,63 @@ function addAnggota(){
 $('#submit_anggota').on('click', function(e){
   e.preventDefault();
   var foto = $('#foto_anggota').val();
-
-  if(foto==''){
-    error('Foto harus diiisi !!!');
-  }else{
-    if(save == 'add'){
-      var formData = new FormData($('#form-anggota')[0]);
-      $.ajax({
-          url : base_url + 'ManajemenData/addAnggota',
-          type : 'POST',
-          data : formData,
-          contentType : false,
-          processData : false,
-          dataType : 'JSON',
-          success : function(data) {
-              if(data.status){
-                  sukses(data.alert);
-                  $('#form-anggota')[0].reset();
-                  $('#modalAnggota').modal('hide');
-                  grid_all.ajax.reload();
-                  grid_active.ajax.reload();
-                  grid_nonactive.ajax.reload();
-              }else{
-                  $('#nama_anggota_error').html(data.nama_anggota_error);
-                  $('#nik_anggota_error').html(data.nik_anggota_error);
-                  $('#tempat_lahir_error').html(data.tempat_lahir_error);
-                  $('#tanggal_lahir_error').html(data.tanggal_lahir_error);
-                  $('#pekerjaan_error').html(data.pekerjaan_error);
-                  $('#no_telp_error').html(data.no_telp_error);
-                  $('#alamat_error').html(data.alamat_error);
-                  $('#kelurahan_error').html(data.kelurahan_error);
-                  $('#kecamatan_error').html(data.kecamatan_error);
-                  $('#kota_kab_error').html(data.kota_kab_error);
-                  $('#keterangan_error').html(data.keterangan_error);
-                   // $('#foto_anggota_error').html(data.foto_anggota_error);
-
-                   // error(data.nama_anggota_error);
-                   // error(data.nik_anggota_error);
-                   // error(data.tempat_lahir_error);
-                   // error(data.tanggal_lahir_error);
-                   // error(data.pekerjaan_error);
-                   // error(data.no_telp_error);
-                   // error(data.alamat_error);
-                   // error(data.kelurahan_error);
-                   // error(data.kecamatan_error);
-                   // error(data.kota_kab_error);
-                   // error(data.keterangan_error);
-                  // error(data.foto_anggota_error);
-              }
-          }
-      })
+  if(save == 'add'){
+    if(foto==''){
+      error('Foto harus diiisi !!!');
+    }
+    var formData = new FormData($('#form-anggota')[0]);
+    $.ajax({
+        url : base_url + 'ManajemenData/addAnggota',
+        type : 'POST',
+        data : formData,
+        contentType : false,
+        processData : false,
+        dataType : 'JSON',
+        success : function(data) {
+            if(data.status){
+                sukses(data.alert);
+                $('#form-anggota')[0].reset();
+                $('#modalAnggota').modal('hide');
+                grid_all.ajax.reload();
+                grid_active.ajax.reload();
+                grid_nonactive.ajax.reload();
+            }else{
+                $('#nama_anggota_error').html(data.nama_anggota_error);
+                $('#nik_anggota_error').html(data.nik_anggota_error);
+                $('#tempat_lahir_error').html(data.tempat_lahir_error);
+                $('#tanggal_lahir_error').html(data.tanggal_lahir_error);
+                $('#pekerjaan_error').html(data.pekerjaan_error);
+                $('#no_telp_error').html(data.no_telp_error);
+                $('#alamat_error').html(data.alamat_error);
+                $('#kelurahan_error').html(data.kelurahan_error);
+                $('#kecamatan_error').html(data.kecamatan_error);
+                $('#kota_kab_error').html(data.kota_kab_error);
+                $('#keterangan_error').html(data.keterangan_error);
+            }
+        }
+    })
   }
-}
+  if(save=='edit'){
+    var formData = new FormData($('#form-anggota')[0]);
+    $.ajax({
+        url : base_url + 'ManajemenData/editAnggota',
+        type : 'POST',
+        data : formData,
+        contentType : false,
+        processData : false,
+        dataType : 'JSON',
+        success : function(data) {
+            if(data.status){
+                sukses(data.alert);
+                $('#form-anggota')[0].reset();
+                $('#modalAnggota').modal('hide');
+                grid_all.ajax.reload();
+                grid_active.ajax.reload();
+                grid_nonactive.ajax.reload();
+            }
+        }
+    })
+  }
 })
 
 $('#cancel_anggota').click(function(){
