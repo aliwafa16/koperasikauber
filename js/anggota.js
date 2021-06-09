@@ -76,7 +76,7 @@ function getAllAnggota(){
                         <div class="col-md-12">
                             <a href="${base_url}ManajemenData/detailAnggota/${full.id_anggota}" type="button" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-info"></i></a>
                             <button onclick="edit_anggota(${full.id_anggota})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                            <button onclick="hapus_anggota(${full.id_anggota})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                         </div>
                     </div>`
           },
@@ -252,6 +252,7 @@ function getAllNonAnggota(){
 
 function edit_anggota(id){
   console.log(id);
+  save = 'edit';
   $('#form-anggota')[0].reset();
   $('#modalAnggota').modal('show');
   $('#modalAnggotaLabel').text('Edit Data Anggota');
@@ -281,7 +282,35 @@ function edit_anggota(id){
     $('#keterangan').val(data.keterangan);
     $('#created_at').val(data.created_at);
     $('#is_active').val(data.is_active);
+    $('#tanggal_masuk').val(data.tanggal_masuk);
     $('#preview_foto').html(html);
+    }
+  })
+}
+
+function hapus_anggota(id){
+  Swal.fire({
+    title: 'Yakin Menghapus Data ?',
+    text: "Data yang dihapus akan hilang secara permanen",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus',
+    cancelButtonText : 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+          url : base_url+'ManajemenData/hapus/'+id,
+          type : 'POST',
+          dataType : 'JSON',
+          success : function(data){
+            sukses(data.alert);
+            grid_all.ajax.reload();
+            grid_active.ajax.reload();
+            grid_nonactive.ajax.reload();
+          }
+        })
     }
   })
 }
@@ -314,9 +343,11 @@ $('#submit_anggota').on('click', function(e){
   e.preventDefault();
   var foto = $('#foto_anggota').val();
   if(save == 'add'){
+
     if(foto==''){
       error('Foto harus diiisi !!!');
     }
+
     var formData = new FormData($('#form-anggota')[0]);
     $.ajax({
         url : base_url + 'ManajemenData/addAnggota',
@@ -348,8 +379,7 @@ $('#submit_anggota').on('click', function(e){
             }
         }
     })
-  }
-  if(save=='edit'){
+  }else{
     var formData = new FormData($('#form-anggota')[0]);
     $.ajax({
         url : base_url + 'ManajemenData/editAnggota',
@@ -404,6 +434,7 @@ function btnNonAktifAnggota(id_anggota){
   }
   })
 }
+
 
 function error(alert) {
   Swal.fire({

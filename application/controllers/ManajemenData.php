@@ -5,6 +5,7 @@ class ManajemenData extends CI_Controller
     {
         parent::__construct();
         $this->load->Model('Anggota_Model');
+        $this->load->Model('Kendaraan_Model');
         $this->load->library('form_validation');
         $this->load->library('upload');
     }
@@ -135,11 +136,60 @@ class ManajemenData extends CI_Controller
     public function editAnggota(){
         $id = $this->input->post('id_anggota');
 
-        $data = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row();
+        $new_foto = $_FILES['foto_anggota']['name'];
 
-        var_dump($data);
-        die;
+        if($new_foto != null){
+            $result = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row_array();
+            $old_image = $result['foto_anggota'];
+            @unlink(FCPATH.'./assets/foto_anggota'.$old_image);
 
+            $data['foto_anggota'] = $this->_foto();
+
+
+        }
+
+        $data = [
+            'kode_anggota' => $this->input->post('kode_anggota', true),
+            'nama_anggota' => $this->input->post('nama_anggota', true),
+            'nik_anggota' => $this->input->post('nik_anggota', true),
+            'tempat_lahir' => $this->input->post('tempat_lahir', true),
+            'tanggal_lahir' => $this->input->post('tanggal_lahir', true),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+            'kecamatan' => $this->input->post('kecamatan', true),
+            'pekerjaan' => $this->input->post('pekerjaan', true),
+            'no_telp' => $this->input->post('no_telp', true),
+            'alamat' => $this->input->post('alamat', true),
+            'kelurahan' => $this->input->post('kelurahan', true),
+            'kecamatan' => $this->input->post('kecamatan', true),
+            'kota_kab' => $this->input->post('kota_kab', true),
+            'keterangan' => $this->input->post('keterangan', true),
+            'is_active' => $this->input->post('is_active', true),
+            'tanggal_masuk' => $this->input->post('tanggal_masuk'),
+            'created_at' => $this->input->post('created_at', true),
+            'update_at' => date('d-m-Y H:i:s', true)
+        ];
+
+        if ($this->Anggota_Model->edit($data, $id)) {
+            $result = ['status' => false, 'alert' => 'Gagal Edit'];
+        } else {
+            $result = ['status' => true, 'alert' => 'Diedit'];
+        }
+        echo json_encode($result);
+    
+    }
+
+    public function hapus($id){
+        $data = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row_array();
+        $old_image = $data['foto_anggota'];
+        @unlink(FCPATH.'./assets/foto_anggota'.$old_image);
+
+        $this->db->where('id_anggota', $id);
+        $this->db->delete('tbl_anggota');
+
+        $result = ['status' => true, 'alert' => 'Dihapus'];
+
+        echo json_encode($result);
     }
 
     private function _foto()
@@ -147,7 +197,7 @@ class ManajemenData extends CI_Controller
         $config = [
             'upload_path' => './assets/foto_anggota',
             'allowed_types' => 'jpg|png|jpeg',
-            'max_size' => 2048,
+            'max_size' => 10048,
             'file_name' => uniqid()
         ];
         $this->upload->initialize($config);
@@ -192,5 +242,23 @@ class ManajemenData extends CI_Controller
 
         $result = ['status' => true, 'alert' => 'Nonaktif !!'];
         echo json_encode($result);
+    }
+
+    public function getAllKendaraan(){
+        $result = $this->Kendaraan_Model->getKendaraan();
+        echo json_encode($result);
+    }
+
+    public function searchAnggota(){
+        $key = $this->input->post('key');
+
+        $data=$this->Anggota_Model->searchAnggota($key);
+
+        if($data != null){
+            echo json_encode($data);
+        }else{
+            $result = ['status'=>false, 'alert'=>'Data Anggota Tidak Ditemukan'];
+            echo json_encode($result);
+        }
     }
 }

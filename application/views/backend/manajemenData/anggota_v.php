@@ -105,9 +105,10 @@
                     <div class="row">
                         <div class="col-md-6">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="id_anggota" name="id_anggota">
-                            <input type="text" class="form-control" id="created_at" name="created_at">
-                            <input type="text" class="form-control" id="is_active" name="is_active">
+                            <input type="hidden" class="form-control" id="id_anggota" name="id_anggota">
+                            <input type="hidden" class="form-control" id="created_at" name="created_at">
+                            <input type="hidden" class="form-control" id="is_active" name="is_active">
+                            <input type="hidden" class="form-control" id="tanggal_masuk" name="tanggal_masuk">
                         </div>
                             <div class="mb-3">
                                 <label for="kode_anggota" class="form-label">Kode Anggota</label>
@@ -186,11 +187,10 @@
                                 <input type="text" class="form-control" id="keterangan" name="keterangan">
                                 <div class="text-danger" id="keterangan_error"></div>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="foto_anggota" class="form-label" style="margin-top: 5px;">Foto Anggota</label>
-                                <div id="preview_foto">
-                                
-                                </div>
+                                <div id="preview_foto"></div>
                                 <input class="form-control" type="file" id="foto_anggota" name="foto_anggota">
                                 <div class="text-danger" id="foto_anggota_error"></div>
                             </div>

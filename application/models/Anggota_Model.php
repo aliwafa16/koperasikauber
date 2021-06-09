@@ -25,4 +25,17 @@ class Anggota_Model extends CI_Model
         $this->db->insert('tbl_anggota', $data);
         return $this->db->affected_rows() > 1 ? true : false;
     }
+
+    public function edit($data, $id)
+    {
+        $this->db->where('id_anggota', $id);
+        $this->db->update('tbl_anggota', $data);
+        return $this->db->affected_rows() > 1 ? true : false;
+    }
+
+    public function searchAnggota($key){
+        $this->db->like('nama_anggota', $key);
+        $this->db->or_like('kode_anggota', $key);
+        return $this->db->get('tbl_anggota')->row();
+    }
 }
