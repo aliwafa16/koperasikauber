@@ -63,6 +63,12 @@ $(document).ready(function(){
               className: "text-center"
     },
     {
+        render: function (data, type, full, meta) {
+            return full.nama_trayek
+          },
+              className: "text-center"
+    },
+    {
         render : function (data, type, full, meta){
           if(full.is_active==0){
             var buttonstatus = `<button type="button" onclick="btnAktifAnggota(${full.id_anggota})" class="btn btn-success btn-sm"><i class="fa fa-check"> Aktif</i></button>
@@ -108,6 +114,7 @@ function addKendaraan(){
 
     $('.result-search').html('');
     $('#search-notfound').html('');
+    $('.form-input-kendaraan').html('');
 }
 
 $('#cari_anggota').on('click', function(e){
@@ -119,7 +126,6 @@ $('#cari_anggota').on('click', function(e){
     $('.form-input-kendaraan').html('');
     
     var key =$('#key_anggota').val();
-    console.log(key);
     $.ajax({
         url : base_url+'ManajemenData/searchAnggota',
         type : 'POST',
@@ -149,9 +155,9 @@ $('#cari_anggota').on('click', function(e){
                 `
 
                 var form = `<div class="mb-4">
-                            <label for="nomor_kendaraaan" class="form-label">Nomor Kendaraan</label>
-                            <input type="text" class="form-control" id="nomor_kendaraaan" name="nomor_kendaraaan">
-                            <div class="text-danger" id="nomor_kendaraaan_error"></div>
+                            <label for="nomor_kendaraan" class="form-label">Nomor Kendaraan</label>
+                            <input type="text" class="form-control" id="nomor_kendaraan" name="nomor_kendaraan">
+                            <div class="text-danger" id="nomor_kendaraan_error"></div>
                         </div>
                         
                         
@@ -160,6 +166,7 @@ $('#cari_anggota').on('click', function(e){
                             <input type="text" class="form-control" id="no_rangka" name="no_rangka">
                             <div class="text-danger" id="no_rangka_error"></div>
                         </div>
+
                         <div class="mb-4">
                             <label for="no_mesin" class="form-label">Nomor Mesin</label>
                             <input type="text" class="form-control" id="no_mesin" name="no_mesin">
@@ -182,6 +189,7 @@ $('#cari_anggota').on('click', function(e){
                             <div class="text-danger" id="type_error"></div>
                         </div>
                         </div>
+
                         <div class="col-md-3">
                         <div class="mb-4">
                             <label for="tahun" class="form-label">Tahun</label>
@@ -189,14 +197,44 @@ $('#cari_anggota').on('click', function(e){
                             <div class="text-danger" id="tahun_error"></div>
                         </div>
                         </div>
+
                         <div class="col-md-3">
                         <div class="mb-4">
                             <label for="warna" class="form-label">Warna</label>
                             <input type="text" class="form-control" id="warna" name="warna">
                             <div class="text-danger" id="warna_error"></div>
                         </div>
+                        </div>
                     </div>
-                    </div>`
+                    
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label for="kategori_trayek" class="form-label">Kategori Trayek</label>
+                            <select class="form-control" id="kategori_trayek" name="kategori_trayek" onChange=listTrayek(this)>
+                              <option value="1">----Pilih Kategori Trayek----</option>
+                              <option value="1">Angkutan Perkotaan</option>
+                              <option value="2">Angkutan Kota Dalam Propinsi</option>
+                              <option value="3">Trans Pakuan Koridor</option>
+                              <option value="4">Angkutan Barang</option>
+                            </select>
+                            <div class="text-danger" id="kategori_trayek_error"></div>
+                        </div>
+                        </div>
+
+                      <div class="col-md-6">
+                      <div class="mb-4">
+                          <label for="trayek" class="form-label list-trayek">Trayek</label>
+                          <select class="form-control" id="trayek" name="trayek">
+                            <option value="1">----Pilih Trayek----</option>
+                          </select>
+                          <div class="text-danger" id="trayek_error"></div>
+                      </div>
+                      </div>
+
+
+                    </div>
+                    `
                 $('.result-search').html(html);
                 $('.form-input-kendaraan').html(form);
             }
@@ -205,3 +243,83 @@ $('#cari_anggota').on('click', function(e){
         }
     });
 })
+
+function listTrayek(){
+  $('#trayek').html('');
+  let id = $('#kategori_trayek').val();
+  $.ajax({
+    url:base_url+'ManajemenData/getListTrayek/'+id,
+    dataType : 'JSON',
+    type : 'POST',
+    success : function (data) {
+      data.forEach(Element => {
+        $('#trayek').append(`<option value="${Element.id_trayek}">${Element.nama_trayek} / ${Element.trayek}</option>`)
+      });
+    }
+  })
+}
+  
+
+
+// function getTrayek(){
+//   $.ajax({
+//     url:base_url+'ManajemenData/getListTrayek',
+//     dataType : 'JSON',
+//     type : 'POST',
+//     success : function (data) {
+
+//     }
+//   })
+  
+// }
+
+$('#submit_kendaraan').on('click', function(e){
+    save = 'add'
+    e.preventDefault();
+
+    var formData = new FormData($('#form-kendaraan')[0])
+    console.log(formData)
+    $.ajax({
+      url : base_url+'ManajemenData/addKendaraan',
+      dataType : 'JSON',
+      type : 'POST',
+      contentType : false,
+      processData : false,
+      data : formData,
+      success : function (data) {
+        if(data.status){
+          sukses(data.alert);
+                $('#form-kendaraan')[0].reset();
+                $('#modalKendaraan').modal('hide');
+                grid.ajax.reload();
+        }else {
+          $('#nomor_kendaraan_error').html(data.nomor_kendaraan_error);
+          $('#no_rangka_error').html(data.no_rangka_error);
+          $('#no_mesin_error').html(data.no_mesin_error);
+          $('#merk_error').html(data.merk_error);
+          $('#type_error').html(data.type_error);
+          $('#tahun_error').html(data.tahun_error);
+          $('#warna_error').html(data.warna_error);
+        }
+      }
+    })
+})
+
+
+function error(alert) {
+  Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: alert,
+})
+}
+
+function sukses(alert) {
+ Swal.fire({
+  icon: 'success',
+  title: 'Data Kepemilikan Kendaraan ' + alert,
+  text: '',
+  timer:1500,
+  showConfirmButton: false,
+})
+}

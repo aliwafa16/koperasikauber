@@ -34,6 +34,7 @@
                                                             <th class="text-center">No Rangka</th>
                                                             <th class="text-center">No Mesin</th>
                                                             <th class="text-center">Warna</th>
+                                                            <th class="text-center">Trayek</th>
                                                             <th class="text-center">Status</th>
                                                             <th class="text-center">Action</th>
                                                         </tr>
@@ -65,20 +66,20 @@
             </div>
             <div class="modal-body">
                 <form action="" id="form-kendaraan">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Masukan Nama/Kode Anggota..." name="key_anggota" id="key_anggota">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" id="cari_anggota" name="cari_anggota" type="button">Cari</button>
-                            </span>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Masukan Nama/Kode Anggota..." name="key_anggota" id="key_anggota">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="cari_anggota" name="cari_anggota" type="button">Cari</button>
+                                </span>
+                            </div>
+                            <div class="text-danger" id="search-notfound"></div>
+                            <div class="result-search">
+                            </div>
                         </div>
-                        <div class="text-danger" id="search-notfound"></div>
-                        <div class="result-search">
-                        </div>
+                        <div class="col-md-8 form-input-kendaraan"></div>
                     </div>
-                    <div class="col-md-8 form-input-kendaraan"></div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" id="cancel_kendaraan" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

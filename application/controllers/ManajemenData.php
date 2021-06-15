@@ -261,4 +261,65 @@ class ManajemenData extends CI_Controller
             echo json_encode($result);
         }
     }
+
+    public function getListTrayek($id)
+    {
+        $data = $this->Kendaraan_Model->getAllTrayek($id);
+        echo json_encode($data);
+    }
+
+    public function addKendaraan()
+    {
+        $this->form_validation->set_rules('nomor_kendaraan', 'Nomor Kendaraan', 'trim|required', ['required' => 'Nomor Kendaraan Wajib Diisi !!']);
+        $this->form_validation->set_rules('no_rangka', 'Nomor Rangka', 'trim|required', ['required' => 'Nomor Rangka Wajib Diisi !!']);
+        $this->form_validation->set_rules('no_mesin', 'Nomor Mesin', 'trim|required', ['required' => 'Nomor Mesin Wajib Diisi !!']);
+        $this->form_validation->set_rules('merk', 'Merek', 'required|trim', ['required' => 'Merek Wajib Diisi !!']);
+        $this->form_validation->set_rules('type', 'Type', 'required|trim', ['required' => 'Type Wajib Diisi !!']);
+        $this->form_validation->set_rules('tahun', 'Tahun', 'required|trim', ['required' => 'Tahun Wajib Diisi !!']);
+        $this->form_validation->set_rules('warna', 'Warna', 'required|trim', ['required' => 'Warna Wajib Diisi !!']);
+
+        if ($this->form_validation->run() == FALSE) {
+            $result = [
+                'nomor_kendaraan_error' => form_error('nomor_kendaraan'),
+                'no_rangka_error' => form_error('no_rangka'),
+                'no_mesin_error' => form_error('no_mesin'),
+                'merk_error' => form_error('merk'),
+                'type_error' => form_error('type'),
+                'tahun_error' => form_error('tahun'),
+                'warna_error' => form_error('warna')
+            ];
+
+            echo json_encode($result);
+        } else {
+            $id_anggota = $this->input->post('id_anggota');
+            $data = [
+                'nomor_kendaraan' => $this->input->post('nomor_kendaraan'),
+                'merk_type' => $this->input->post('merk') . '/' . $this->input->post('type'),
+                'tahun' => $this->input->post('tahun'),
+                'no_rangka' => $this->input->post('no_rangka'),
+                'no_mesin' => $this->input->post('no_mesin'),
+                'warna' => $this->input->post('warna'),
+                'is_active' => 1,
+                'id_trayek' => $this->input->post('trayek'),
+                'created_at' => date('d-m-Y H:i:s')
+            ];
+
+            $id_kendaraan = $this->Kendaraan_Model->add($data);
+
+            $data2 = [
+                'id_kendaraan' => $id_kendaraan,
+                'id_anggota' => $id_anggota,
+                'is_active' => 0,
+                'created_at' => date('d-m-Y H:i:s')
+            ];
+
+            if ($this->Kendaraan_Model->addKepemilikan($data2)) {
+                $result = ['status' => false, 'alert' => 'Gagal DiTambahkan'];
+            } else {
+                $result = ['status' => true, 'alert' => 'Ditambahkan'];
+            }
+
+            echo json_encode($result);
+        }
+    }
 }
