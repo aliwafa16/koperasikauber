@@ -249,6 +249,18 @@ class ManajemenData extends CI_Controller
         echo json_encode($result);
     }
 
+    public function getKendaraanByID($id)
+    {
+        $result = $this->Kendaraan_Model->getKendaraanID($id);
+        echo json_encode($result);
+    }
+
+    public function trayek()
+    {
+        $result = $this->db->get('tbl_trayek')->result();
+        echo json_encode($result);
+    }
+
     public function searchAnggota(){
         $key = $this->input->post('key');
 
@@ -299,7 +311,7 @@ class ManajemenData extends CI_Controller
                 'no_rangka' => $this->input->post('no_rangka'),
                 'no_mesin' => $this->input->post('no_mesin'),
                 'warna' => $this->input->post('warna'),
-                'is_active' => 1,
+                'is_active' => 0,
                 'id_trayek' => $this->input->post('trayek'),
                 'created_at' => date('d-m-Y H:i:s')
             ];
@@ -321,5 +333,65 @@ class ManajemenData extends CI_Controller
 
             echo json_encode($result);
         }
+    }
+
+    public function hapusKendaraan($id)
+    {
+        $this->db->where('id_kendaraan', $id);
+        $this->db->delete('tbl_kendaraan');
+        $this->hapusKepemilikan($id);
+
+        $result = ['status' => true, 'alert' => 'Dihapus'];
+        echo json_encode($result);
+    }
+
+    public function hapusKepemilikan($id)
+    {
+        $this->db->where('id_kendaraan', $id);
+        $this->db->delete('tbl_kepemilikan');
+    }
+
+    public function aktifKendaraan($id)
+    {
+        $this->db->set('is_active', 1);
+        $this->db->where('id_kendaraan', $id);
+        $this->db->update('tbl_kendaraan');
+
+        $result = ['status' => true, 'alert' => 'Aktif !!'];
+        echo json_encode($result);
+    }
+
+    public function NonaktifKendaraan($id)
+    {
+        $this->db->set('is_active', 2);
+        $this->db->where('id_kendaraan', $id);
+        $this->db->update('tbl_kendaraan');
+
+        $result = ['status' => true, 'alert' => 'Nonaktif !!'];
+        echo json_encode($result);
+    }
+
+    public function editKendaraan()
+    {
+        $trayek = $this->input->post('trayek');
+        $id_kendaraan = $this->input->post('edit_id_kendaraan');
+
+        if (isset($trayek)) {
+            $data['id_trayek'] = $this->input->post('trayek');
+        }
+
+        $data = [
+            'no_kendaraan' => $this->input->post('edit_nomor_kendaraan'),
+            'no_rangka' => $this->input->post('edit_no_rangka'),
+            'no_mesin' => $this->input->post('edit_no_mesin'),
+            'merk' => $this->input->post('edit_merk'),
+            'type' => $this->input->post('edit_type'),
+            'tahun' => $this->input->post('edit_tahun'),
+            'warna' => $this->input->post('edit_warna'),
+        ];
+
+
+        var_dump($id_kendaraan);
+        die;
     }
 }

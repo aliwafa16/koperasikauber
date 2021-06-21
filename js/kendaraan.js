@@ -71,12 +71,12 @@ $(document).ready(function(){
     {
         render : function (data, type, full, meta){
           if(full.is_active==0){
-            var buttonstatus = `<button type="button" onclick="btnAktifAnggota(${full.id_anggota})" class="btn btn-success btn-sm"><i class="fa fa-check"> Aktif</i></button>
-                                <button type="button" onclick="btnNonAktifAnggota(${full.id_anggota})" class="btn btn-danger btn-sm"><i class="fa fa-times"> Tidak Aktif</i></button>`
+            var buttonstatus = `<button type="button" onclick="btnAktifKendaraan(${full.id_kendaraan})" class="btn btn-success btn-sm"><i class="fa fa-check"> Aktif</i></button>
+                                <button type="button" onclick="btnNonAktifKendaraan(${full.id_kendaraan})" class="btn btn-danger btn-sm"><i class="fa fa-times"> Tidak Aktif</i></button>`
           }else if(full.is_active==1){
-            var buttonstatus = `<button type="button" onclick="btnNonAktifAnggota(${full.id_anggota})" class="btn btn-success btn-sm"><i class="fa fa-check"> Aktif</i></button>`
+            var buttonstatus = `<button type="button" onclick="btnNonAktifKendaraan(${full.id_kendaraan})" class="btn btn-success btn-sm"><i class="fa fa-check"> Aktif</i></button>`
           }else if(full.is_active==2){
-            var buttonstatus = `<button type="button" onclick="btnAktifAnggota(${full.id_anggota})" class="btn btn-danger btn-sm"><i class="fa fa-times"> Tidak Aktif</i></button>`
+            var buttonstatus = `<button type="button" onclick="btnAktifKendaraan(${full.id_kendaraan})" class="btn btn-danger btn-sm"><i class="fa fa-times"> Tidak Aktif</i></button>`
           }
           return buttonstatus;
         },
@@ -86,9 +86,9 @@ $(document).ready(function(){
         render : function (data, type, full, meta){
               return `<div class="row">
                         <div class="col-md-12">
-                            <a href="${base_url}ManajemenData/detailAnggota/${full.id_anggota}" type="button" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-info"></i></a>
-                            <button onclick="edit_anggota(${full.id_anggota})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-                            <button onclick="hapus_anggota(${full.id_anggota})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                            <a href="${base_url}ManajemenData/detailAnggota/${full.id_kendaraan}" type="button" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-info"></i></a>
+                            <button onclick="edit_kendaraan(${full.id_kendaraan})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+                            <button onclick="hapus_kendaraan(${full.id_kendaraan})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                         </div>
                     </div>`
           },
@@ -111,13 +111,22 @@ function addKendaraan(){
       $('#cancel_kendaraan').modal('hide')
     });
     $('.text-danger').empty();
-
+    $('.search-anggota').html(`
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Masukan Nama/Kode Anggota..." name="key_anggota" id="key_anggota">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" id="cari_anggota" name="cari_anggota" type="button">Cari</button>
+                                    </span>
+                                </div>
+                                <div class="text-danger" id="search-notfound"></div>
+                            `);
     $('.result-search').html('');
     $('#search-notfound').html('');
     $('.form-input-kendaraan').html('');
+     $('.biodata').html('');
 }
 
-$('#cari_anggota').on('click', function(e){
+$('#form-kendaraan').on('click','#cari_anggota',function(e){
     console.log('ok')
     e.preventDefault();
 
@@ -258,20 +267,30 @@ function listTrayek(){
     }
   })
 }
-  
 
+function btnAktifKendaraan(id_kendaraan){
+  $.ajax({
+    url : base_url+'ManajemenData/aktifKendaraan/'+id_kendaraan,
+    type : 'POST',
+    dataType : 'JSON',
+    success : function (data){
+      sukses(data.alert);
+      grid.ajax.reload();
+  }
+  })
+}
 
-// function getTrayek(){
-//   $.ajax({
-//     url:base_url+'ManajemenData/getListTrayek',
-//     dataType : 'JSON',
-//     type : 'POST',
-//     success : function (data) {
-
-//     }
-//   })
-  
-// }
+function btnNonAktifKendaraan(id_kendaraan){
+  $.ajax({
+    url : base_url+'ManajemenData/NonaktifKendaraan/'+id_kendaraan,
+    type : 'POST',
+    dataType : 'JSON',
+    success : function (data){
+      sukses(data.alert);
+      grid.ajax.reload();
+  }
+  })
+}
 
 $('#submit_kendaraan').on('click', function(e){
     save = 'add'
@@ -305,6 +324,177 @@ $('#submit_kendaraan').on('click', function(e){
     })
 })
 
+
+$('#cancel_kendaraan').click(function(){
+  $('#form-kendaraan')[0].reset();
+  $('#modalKendaraan').modal('hide');
+})
+
+function trayek(){
+  $.ajax({
+    url : base_url+'ManajemenData/trayek',
+    type : 'POST',
+    dataType : 'JSON',
+    success : function (data) {
+       data.forEach(Element => {
+        $('#trayek').append(`<option value="${Element.id_trayek}">${Element.nama_trayek} / ${Element.trayek}</option>`)
+      });
+    }
+  })
+}
+
+function edit_kendaraan(id){
+    save = 'edit';
+    $('#form-edit-kendaraan')[0].reset();
+    $('#modalEditKendaraan').modal('show');
+    $('#modalEditKendaraanLabel').text('Edit Data Kendaraan');
+    $('#submit_edit_kendaraan').text('Edit Data');
+    $('#cancel_edit_kendaraan').text('Batal')
+    $('#submit_kendaraan').attr('disabled', false)
+
+    $('.text-danger').empty();
+    $('.search-anggota').html('');
+    $('.result-search').html('');
+    $('#search-notfound').html('');
+    $('.form-input-kendaraan').html('');
+
+    $('#anggota_search-notfound').html('');
+    $('.result_kepemilikan_baru').html('');
+    $('.kepemilikan_baru').html('')
+
+    $('#trayek').html('');
+    $.ajax({
+        url : base_url+'ManajemenData/getKendaraanByID/'+id,
+        type : 'POST',
+        dataType : 'JSON',
+        success : function (data) {
+
+          trayek();
+
+          var merk_type = data.merk_type;
+          var str = merk_type.split('/');
+          var merk = str[0];
+          var type = str[1];
+
+          console.log(merk, type);
+          var html = `
+                <div class="profile-pic centered">
+                <h4 class="">Pemilik</h4>
+                    <img src="${base_url}assets/foto_anggota/${data.foto_anggota}" class="img-circle">
+                    <h1 class="">${data.nama_anggota} <a href="javascript:;" onclick="editKepemilikan()"><i class="fa fa-pencil aria-hidden="true""></i></a></h1> 
+                    <h6>${data.kode_anggota}</h6>
+                </div>
+                `
+          $('.biodata').html(html);
+
+          $('#edit_id_anggota').val(data.id_anggota);
+          $('#edit_id_kendaraan').val(data.id_kendaraan);
+          $('#edit_id_kepemilikan').val(data.id_kepemilikan);
+          $('#edit_id_trayek').val(data.id_trayek);
+          
+
+          $('#edit_nomor_kendaraan').val(data.nomor_kendaraan);
+          $('#edit_no_rangka').val(data.no_rangka);
+          $('#edit_no_mesin').val(data.no_mesin);
+          $('#edit_merk').val(merk);
+          $('#edit_type').val(type);
+          $('#edit_tahun').val(data.tahun);
+          $('#edit_warna').val(data.warna);
+          $('#kategori_trayek').val(data.id_jenis_trayek);
+          $('#trayek').val(data.id_trayek);
+          
+        }
+    })
+}
+
+function editKepemilikan(){
+  var html = `<div class="input-group">
+                  <input type="text" class="form-control" placeholder="Masukan Nama/Kode Anggota...." name="key_pemilik" id="key_pemilik">
+                  <span class="input-group-btn">
+                  <button class="btn btn-default" id="cari_pemilik" name="cari_pemilik" type="button">Cari</button>
+                  </span>
+                  </div>
+                  <div class="text-danger" id="anggota_search-notfound">
+                  </div>
+                  <div class="result_kepemilikan_baru">
+                  </div>
+                  `
+  $('.kepemilikan_baru').html(html);
+
+  $('#cari_pemilik').on('click', function() {
+    var key = $('#key_pemilik').val();
+     $('#anggota_search-notfound').html('');
+      $('.result_kepemilikan_baru').html('')
+    $.ajax({
+        url : base_url+'ManajemenData/searchAnggota',
+        type : 'POST',
+        dataType : 'JSON',
+        data : {key:key},
+        success : function (data){
+          if(data.status==false){
+            $('#anggota_search-notfound').html(`<h4 class="">${data.alert}</h4>`)
+          }else{
+             if(data.is_active==1){
+                    var aktif = 'Anggota Aktif';
+                }else if(data.is_active==2){
+                    var aktif = 'Anggota NonAktif';
+                }else{
+                    var aktif = 'Anggota Terdaftar'
+                }
+
+            var result = `<div class="profile-pic centered">
+                    <h4 class="">`+aktif+`</h4>
+                    <h1 class="">${data.nama_anggota}</h1> 
+                    <h6>${data.kode_anggota}</h6>
+                </div>`
+            $('.result_kepemilikan_baru').html(result);
+          }
+        }
+    })
+  })
+  
+}
+
+$('#submit_edit_kendaraan').on('click', function(e){
+   e.preventDefault();
+  var formData = new FormData($('#form-edit-kendaraan')[0]);
+  $.ajax({
+    url : base_url+'ManajemenData/editKendaraan',
+    data : formData,
+    type : 'POST',
+    dataType : 'JSON',
+    contentType : false,
+    processData : false,
+    success : function (data) {
+      
+    }
+  })
+})
+
+function hapus_kendaraan(id){
+  Swal.fire({
+    title: 'Yakin Menghapus Data ?',
+    text: "Data yang dihapus akan hilang secara permanen",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus',
+    cancelButtonText : 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+          url : base_url+'ManajemenData/hapusKendaraan/'+id,
+          type : 'POST',
+          dataType : 'JSON',
+          success : function(data){
+            sukses(data.alert);
+            grid.ajax.reload();
+          }
+        })
+    }
+  })
+}
 
 function error(alert) {
   Swal.fire({
