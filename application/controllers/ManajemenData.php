@@ -48,8 +48,9 @@ class ManajemenData extends CI_Controller
         echo json_encode($result);
     }
 
-    public function getAnggotaByID($id){
-        $result = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row();
+    public function getAnggotaByID($id)
+    {
+        $result = $this->db->get_where('tbl_anggota', ['id_anggota' => $id])->row();
         echo json_encode($result);
     }
 
@@ -133,19 +134,18 @@ class ManajemenData extends CI_Controller
         }
     }
 
-    public function editAnggota(){
+    public function editAnggota()
+    {
         $id = $this->input->post('id_anggota');
 
         $new_foto = $_FILES['foto_anggota']['name'];
 
-        if($new_foto != null){
-            $result = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row_array();
+        if ($new_foto != null) {
+            $result = $this->db->get_where('tbl_anggota', ['id_anggota' => $id])->row_array();
             $old_image = $result['foto_anggota'];
-            @unlink(FCPATH.'./assets/foto_anggota'.$old_image);
+            @unlink(FCPATH . './assets/foto_anggota' . $old_image);
 
             $data['foto_anggota'] = $this->_foto();
-
-
         }
 
         $data = [
@@ -176,13 +176,13 @@ class ManajemenData extends CI_Controller
             $result = ['status' => true, 'alert' => 'Diedit'];
         }
         echo json_encode($result);
-    
     }
 
-    public function hapus($id){
-        $data = $this->db->get_where('tbl_anggota', ['id_anggota'=>$id])->row_array();
+    public function hapus($id)
+    {
+        $data = $this->db->get_where('tbl_anggota', ['id_anggota' => $id])->row_array();
         $old_image = $data['foto_anggota'];
-        @unlink(FCPATH.'./assets/foto_anggota'.$old_image);
+        @unlink(FCPATH . './assets/foto_anggota' . $old_image);
 
         $this->db->where('id_anggota', $id);
         $this->db->delete('tbl_anggota');
@@ -244,7 +244,8 @@ class ManajemenData extends CI_Controller
         echo json_encode($result);
     }
 
-    public function getAllKendaraan(){
+    public function getAllKendaraan()
+    {
         $result = $this->Kendaraan_Model->getKendaraan();
         echo json_encode($result);
     }
@@ -261,17 +262,24 @@ class ManajemenData extends CI_Controller
         echo json_encode($result);
     }
 
-    public function searchAnggota(){
+    public function searchAnggota()
+    {
         $key = $this->input->post('key');
 
-        $data=$this->Anggota_Model->searchAnggota($key);
+        $data = $this->Anggota_Model->searchAnggota($key);
 
-        if($data != null){
+        if ($data != null) {
             echo json_encode($data);
-        }else{
-            $result = ['status'=>false, 'alert'=>'Data Anggota Tidak Ditemukan'];
+        } else {
+            $result = ['status' => false, 'alert' => 'Data Anggota Tidak Ditemukan'];
             echo json_encode($result);
         }
+    }
+
+    public function getEditTrayek($id)
+    {
+        $result = $this->db->get_where('tbl_trayek', ['id_jenis_trayek' => $id])->result();
+        echo json_encode($result);
     }
 
     public function getListTrayek($id)

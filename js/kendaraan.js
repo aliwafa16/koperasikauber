@@ -123,7 +123,7 @@ function addKendaraan(){
     $('.result-search').html('');
     $('#search-notfound').html('');
     $('.form-input-kendaraan').html('');
-     $('.biodata').html('');
+    $('.biodata').html('');
 }
 
 $('#form-kendaraan').on('click','#cari_anggota',function(e){
@@ -261,6 +261,7 @@ function listTrayek(){
     dataType : 'JSON',
     type : 'POST',
     success : function (data) {
+      console.log(data);
       data.forEach(Element => {
         $('#trayek').append(`<option value="${Element.id_trayek}">${Element.nama_trayek} / ${Element.trayek}</option>`)
       });
@@ -360,7 +361,7 @@ function edit_kendaraan(id){
 
     $('#anggota_search-notfound').html('');
     $('.result_kepemilikan_baru').html('');
-    $('.kepemilikan_baru').html('')
+    $('.kepemilikan_baru').html('');
 
     $('#trayek').html('');
     $.ajax({
@@ -369,8 +370,27 @@ function edit_kendaraan(id){
         dataType : 'JSON',
         success : function (data) {
 
-          trayek();
 
+          $.ajax({
+            url : base_url+'ManajemenData/getEditTrayek/'+data.id_jenis_trayek,
+            type : 'POST',
+            dataType : 'JSON',
+            success : function (resp){
+              console.log(resp)
+                const idTrayek = data.id_trayek;
+                resp.forEach(Element => {
+                  if(idTrayek === Element.id_trayek) {
+                    $('#trayek').append(`<option value="${Element.id_trayek}" selected>${Element.nama_trayek} / ${Element.trayek}</option>`);
+                  } else {
+                    $('#trayek').append(`<option value="${Element.id_trayek}">${Element.nama_trayek} / ${Element.trayek}</option>`)
+                  }
+
+              });
+           
+            }
+        });
+
+           $('#trayek').val(data.id_trayek);
           var merk_type = data.merk_type;
           var str = merk_type.split('/');
           var merk = str[0];
@@ -381,7 +401,7 @@ function edit_kendaraan(id){
                 <div class="profile-pic centered">
                 <h4 class="">Pemilik</h4>
                     <img src="${base_url}assets/foto_anggota/${data.foto_anggota}" class="img-circle">
-                    <h1 class="">${data.nama_anggota} <a href="javascript:;" onclick="editKepemilikan()"><i class="fa fa-pencil aria-hidden="true""></i></a></h1> 
+                    <h1 class="">${data.nama_anggota}</h1> 
                     <h6>${data.kode_anggota}</h6>
                 </div>
                 `
@@ -401,7 +421,6 @@ function edit_kendaraan(id){
           $('#edit_tahun').val(data.tahun);
           $('#edit_warna').val(data.warna);
           $('#kategori_trayek').val(data.id_jenis_trayek);
-          $('#trayek').val(data.id_trayek);
           
         }
     })
