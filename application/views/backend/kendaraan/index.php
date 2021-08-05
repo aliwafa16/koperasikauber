@@ -173,4 +173,53 @@
     </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="editKepemilikanModal" tabindex="-1" aria-labelledby="editKepemilikanModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editKepemilikanModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="" method="POST" id="form-edit-kepemilikan">
+          <div class="row justify-content-end">
+              <div class="col-md-8">
+                    <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Masukan nama / kode anggota...." name="key_anggota" id="key_anggota" aria-label="Masukan nama / kode anggota...." aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="btn_cari_pemilik"><i class="fa fa-search"></i></button>
+                    </div>
+                    </div>
+                    <h4 class="text-danger not_found"></h4>
+              </div>
+          </div>
+      <div class="form-group">
+    <label for="pemilik_awal">Pemilik awal</label>
+    <input type="text" class="form-control" id="pemilik_awal" name="pemilik_awal" readonly>
+  </div>
+    <div class="form-group">
+    <label for="pemilik_baru">Pemilik baru</label>
+    <input type="text" class="form-control" id="pemilik_baru" name="pemilik_baru" readonly>
+  </div>
+    <div class="form-group">
+    <label for="kode_anggota">Kode Anggota</label>
+    <input type="text" class="form-control" id="kode_anggota" name="kode_anggota" readonly>
+  </div>
+
+  <input type="text" id="id_anggota" name="id_anggota">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel_kepemilikan_kendaraan" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="submit_kepemilikan_kendaraan" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
     <script src="<?= base_url() ?>js/kendaraan.js"></script>

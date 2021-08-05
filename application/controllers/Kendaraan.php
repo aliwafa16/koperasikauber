@@ -57,6 +57,11 @@ class Kendaraan extends CI_Controller
         echo json_encode($result);
     }
 
+    public function getKepemilikan($id){
+        $result = $this->Kepemilikan_Model->getKepemilikanLama($id);
+        echo json_encode($result);
+    }
+
     public function addKendaraan()
     {
         $this->form_validation->set_rules('nomor_kendaraan', 'Nomor Kendaraan', 'trim|required', ['required' => 'Nomor Kendaraan Wajib Diisi !!']);
@@ -109,6 +114,20 @@ class Kendaraan extends CI_Controller
             }
             echo json_encode($result);
         }
+    }
+
+    public function editKepemilikan($id){
+        $data = [
+            'id_anggota' => $this->input->post('id_anggota'),
+            'updated_at' => date('d-m-Y H:i:s')
+        ];
+
+        if ($this->Kepemilikan_Model->edit($data, $id)) {
+            $result = ['status' => false, 'alert' => 'Gagal Edit'];
+        } else {
+            $result = ['status' => true, 'alert' => 'Diedit'];
+        }
+        echo json_encode($result);
     }
 
     public function editKendaraan()
