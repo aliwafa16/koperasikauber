@@ -1,42 +1,42 @@
+<!--
+=========================================================
+* Argon Dashboard - v1.2.0
+=========================================================
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+
+
+* Copyright  Creative Tim (http://www.creative-tim.com)
+* Coded by www.creative-tim.com
+
+
+
+=========================================================
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Dashboard">
-  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title><?= $title ?> - Kauber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title><?= $title; ?></title>
+  <!-- Favicon -->
+  <link rel="icon" href="<?= base_url('assets/backend') ?>/assets/img/brand/icon2-removebg-preview.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="<?= base_url('assets/backend') ?>/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="<?= base_url('assets/backend') ?>/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="<?= base_url('assets/backend') ?>/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="<?= base_url('assets/DataTables') ?>/DataTables-1.10.25/css/jquery.dataTables.css">
 
-  <!-- Favicons -->
-  <link href="<?= base_url() ?>assets/frontend/img/icon2.png" rel="icon">
-  <link href="<?= base_url('assets/backend/admin/') ?>img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Bootstrap core CSS -->
-  <link href="<?= base_url('assets/backend/admin/') ?>lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--external css-->
-  <link href="<?= base_url('assets/backend/admin/') ?>lib/font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/backend/admin/') ?>css/zabuto_calendar.css">
-  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/backend/admin/') ?>lib/gritter/css/jquery.gritter.css">
-  <!-- Custom styles for this template -->
-  <link href="<?= base_url('assets/backend/admin/') ?>css/style.css" rel="stylesheet">
-  <link href="<?= base_url('assets/backend/admin/') ?>css/style-responsive.css" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url() ?>DataTables/datatables.min.css">
-  <script src="<?= base_url('assets/backend/admin/') ?>lib/chart-master/Chart.js"></script>
-
-
-
-
-
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
 </head>
 
-<script>
+<body>
+  <script src="<?= base_url('assets/DataTables') ?>/jquery-3.5.1.js"></script>
+  <script>
     const base_url = '<?= base_url() ?>'
-</script>
+  </script>

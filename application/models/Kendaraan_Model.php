@@ -2,10 +2,10 @@
 class Kendaraan_Model extends CI_Model{
     public function getKendaraan(){
         $this->db->select('tbl_kendaraan.*,tbl_trayek.nama_trayek');
-        
         $this->db->join('tbl_trayek', 'tbl_trayek.id_trayek=tbl_kendaraan.id_trayek');
         $this->db->join('tbl_jenis_trayek', 'tbl_jenis_trayek.id_jenis_trayek=tbl_trayek.id_jenis_trayek');
         $this->db->from('tbl_kendaraan');
+        $this->db->where('tbl_kendaraan.deleted_at =', null);
         return $this->db->get()->result();
     }
 
@@ -15,10 +15,14 @@ class Kendaraan_Model extends CI_Model{
         return $this->db->insert_id();
     }
 
-    public function addKepemilikan($data)
+    public function getRiwayatKendaraan()
     {
-        $this->db->insert('tbl_kepemilikan', $data);
-        return $this->db->affected_rows() > 1 ? true : false;
+        $this->db->select('tbl_kendaraan.*,tbl_trayek.nama_trayek');
+        $this->db->join('tbl_trayek', 'tbl_trayek.id_trayek=tbl_kendaraan.id_trayek');
+        $this->db->join('tbl_jenis_trayek', 'tbl_jenis_trayek.id_jenis_trayek=tbl_trayek.id_jenis_trayek');
+        $this->db->from('tbl_kendaraan');
+        $this->db->where('tbl_kendaraan.deleted_at !=', null);
+        return $this->db->get()->result();
     }
 
     public function getAllTrayek($id)
@@ -33,22 +37,24 @@ class Kendaraan_Model extends CI_Model{
 
     public function getKendaraanID($id)
     {
-        $this->db->select('
+        $this->db->select(
+            '
                 tbl_kendaraan.*,
                 tbl_trayek.nama_trayek,
                 tbl_jenis_trayek.id_jenis_trayek,
-                tbl_jenis_trayek.nama_jenis_trayek,
-                tbl_anggota.nama_anggota,
-                tbl_anggota.kode_anggota,
-                tbl_anggota.id_anggota,
-                tbl_anggota.foto_anggota,
-                tbl_kepemilikan.id_kepemilikan');
+                tbl_jenis_trayek.nama_jenis_trayek'
+        );
         $this->db->join('tbl_trayek', 'tbl_trayek.id_trayek=tbl_kendaraan.id_trayek');
         $this->db->join('tbl_jenis_trayek', 'tbl_jenis_trayek.id_jenis_trayek=tbl_trayek.id_jenis_trayek');
-        $this->db->join('tbl_kepemilikan', 'tbl_kepemilikan.id_kendaraan=tbl_kendaraan.id_kendaraan');
-        $this->db->join('tbl_anggota', 'tbl_anggota.id_anggota=tbl_kepemilikan.id_anggota');
         $this->db->from('tbl_kendaraan');
         $this->db->where('tbl_kendaraan.id_kendaraan', $id);
         return $this->db->get()->row();
+    }
+
+    public function edit($data, $id)
+    {
+        $this->db->where('id_kendaraan', $id);
+        $this->db->update('tbl_kendaraan', $data);
+        return $this->db->affected_rows() > 1 ? true : false;
     }
 }

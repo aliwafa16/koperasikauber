@@ -11,7 +11,7 @@ $(document).ready(function(){
             }else{
                 var formData = new FormData($('#form-login')[0]);
                 $.ajax({
-                    url : base_url+'admin/auth/login',
+                    url : base_url+'auth/login',
                     method : 'POST',
                     data : formData,
                     dataType : 'JSON',

@@ -1,86 +1,31 @@
-<!--footer start-->
-
-<footer class="site-footer">
-    <div class="text-center">
-        <p>
-            &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
-        </p>
-        <div class="credits">
-            <!--
-            You are NOT allowed to delete the credit link to TemplateMag with free version.
-            You can delete the credit link only if you bought the pro version.
-            Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
-            Licensing information: https://templatemag.com/license/
-          -->
-            Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+        <!-- Footer -->
+        <footer class="footer pt-0">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-md-2">
+                    <div class="copyright text-center  text-lg-left  text-muted">
+                        &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">Koperasi Kauber</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
         </div>
-        <a href="index.html#" class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
-    </div>
-</footer>
-<!--footer end-->
-</section>
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="<?= base_url('assets/backend/admin/') ?>lib/jquery/jquery.min.js"></script>
+        </div>
 
-<script src="<?= base_url('assets/backend/admin/') ?>lib/bootstrap/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="<?= base_url('assets/backend/admin/') ?>lib/jquery.dcjqaccordion.2.7.js"></script>
-<script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.scrollTo.min.js"></script>
-<script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="<?= base_url('assets/backend/admin/') ?>lib/jquery.sparkline.js"></script>
-<!--common script for all pages-->
-<script src="<?= base_url('assets/backend/admin/') ?>lib/common-scripts.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/backend/admin/') ?>lib/gritter/js/jquery.gritter.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/backend/admin/') ?>lib/gritter-conf.js"></script>
-<!--script for this page-->
-<script src="<?= base_url('assets/backend/admin/') ?>lib/sparkline-chart.js"></script>
-<script src="<?= base_url('assets/backend/admin/') ?>lib/zabuto_calendar.js"></script>
-<script src="<?= base_url() ?>DataTables/datatables.min.js"></script>
-<script src="<?= base_url() ?>assets/backend/js/sweetalert2.all.min.js"></script>
-<script type="application/javascript">
-    $(document).ready(function() {
-        $("#date-popover").popover({
-            html: true,
-            trigger: "manual"
-        });
-        $("#date-popover").hide();
-        $("#date-popover").click(function(e) {
-            $(this).hide();
-        });
+        </div>
+        <!-- Argon Scripts -->
+        <!-- Core -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="<?= base_url('assets/DataTables') ?>/DataTables-1.10.25/js/jquery.dataTables.js"></script>
+        <!-- <script src="<?= base_url('assets/backend') ?>/assets/vendor/jquery/dist/jquery.min.js"></script> -->
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/js-cookie/js.cookie.js"></script>
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+        <!-- Optional JS -->
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/chart.js/dist/Chart.min.js"></script>
+        <script src="<?= base_url('assets/backend') ?>/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+        <!-- Argon JS -->
+        <script src="<?= base_url('assets/backend') ?>/assets/js/argon.js?v=1.2.0"></script>
+        </body>
 
-        $("#my-calendar").zabuto_calendar({
-            action: function() {
-                return myDateFunction(this.id, false);
-            },
-            action_nav: function() {
-                return myNavFunction(this.id);
-            },
-            ajax: {
-                url: "show_data.php?action=1",
-                modal: true
-            },
-            legend: [{
-                    type: "text",
-                    label: "Special event",
-                    badge: "00"
-                },
-                {
-                    type: "block",
-                    label: "Regular event",
-                }
-            ]
-        });
-    });
-
-    function myNavFunction(id) {
-        $("#date-popover").hide();
-        var nav = $("#" + id).data("navigation");
-        var to = $("#" + id).data("to");
-        console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
-    }
-</script>
-
-</body>
-
-</html>
+        </html>

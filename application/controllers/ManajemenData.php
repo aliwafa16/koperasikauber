@@ -30,23 +30,23 @@ class ManajemenData extends CI_Controller
         $this->load->view('backend/templates/admin_footer');
     }
 
-    public function getAllAnggota()
-    {
-        $result = $this->Anggota_Model->getAnggota();
-        echo json_encode($result);
-    }
+    // public function getAllAnggota()
+    // {
+    //     $result = $this->Anggota_Model->getAnggota();
+    //     echo json_encode($result);
+    // }
 
-    public function getAllActiveAnggota()
-    {
-        $result = $this->Anggota_Model->getActiveAnggota();
-        echo json_encode($result);
-    }
+    // public function getAllActiveAnggota()
+    // {
+    //     $result = $this->Anggota_Model->getActiveAnggota();
+    //     echo json_encode($result);
+    // }
 
-    public function getAllNonActiveAnggota()
-    {
-        $result = $this->Anggota_Model->getNonActiveAnggota();
-        echo json_encode($result);
-    }
+    // public function getAllNonActiveAnggota()
+    // {
+    //     $result = $this->Anggota_Model->getNonActiveAnggota();
+    //     echo json_encode($result);
+    // }
 
     public function getAnggotaByID($id)
     {
@@ -398,8 +398,6 @@ class ManajemenData extends CI_Controller
             'warna' => $this->input->post('edit_warna'),
         ];
 
-
-        var_dump($id_kendaraan);
-        die;
+        
     }
 }
