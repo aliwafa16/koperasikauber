@@ -8,6 +8,17 @@ class Kendaraan extends CI_Controller
         $this->load->model('Anggota_Model');
         $this->load->model('Kepemilikan_Model');
         $this->load->library('form_validation');
+
+        if (!$this->session->userdata('token')) {
+            $allowed = [];
+            if (!in_array($this->router->fetch_method(), $allowed)) {
+                redirect('auth');
+            }
+        }
+
+        if ($this->session->userdata('id_role') == 4) {
+            redirect('helper/index.html');
+        }
     }
 
     public function index()

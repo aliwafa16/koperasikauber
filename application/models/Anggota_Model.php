@@ -32,7 +32,13 @@ class Anggota_Model extends CI_Model
     public function add($data)
     {
         $this->db->insert('tbl_anggota', $data);
-        return $this->db->affected_rows() > 1 ? true : false;
+        $result = $this->db->affected_rows() > 1 ? true : false;
+        $data = [
+            'id' => $this->db->insert_id(),
+            'result' => $result
+        ];
+
+        return $data;
     }
 
     public function edit($data, $id)

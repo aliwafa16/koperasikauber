@@ -15,7 +15,7 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <h1 class="text-white">Selamat Datang !!</h1>
+                            <h1 class="text-white">Halaman Registrasi</h1>
                             <p class="text-lead text-white">Aplikasi Koperasi Jasa Angkutan Usaha Bersama (KAUBER)</p>
                         </div>
                     </div>
@@ -34,27 +34,20 @@
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
-                                <small>Silahkan Masuk</small>
+                                <small>Silahkan Masukan Kode anggota</small>
                             </div>
-                            <form role="form" method="POST" id="form-login">
+                            <form role="form" method="POST" id="form-cekAnggota">
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                            <span class="input-group-text"><i class="fa fa fa-check-square"></i></span>
                                         </div>
-                                        <input class="form-control" id="email_user" name="email_user" placeholder="Email / Username" type="text">
+                                        <input class="form-control" id="kode_anggota" name="kode_anggota" placeholder="contoh : 17/KAUBER/03.08.21/2021" type="text">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        <input class="form-control" id="password_user" name="password_user" placeholder="Password" type="password">
-                                    </div>
+                                    <small class="text-danger"><sup>*</sup> Apabila terjadi kesalahan silahkan hubungi admin</small>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" id="auth_button" class="btn btn-primary my-4">Login</button>
+                                    <button type="submit" id="cek_kode_button" class="btn btn-primary my-4">Kirim</button>
                                 </div>
                             </form>
                         </div>
@@ -64,7 +57,7 @@
                             <a href="<?= base_url() ?>auth/lupaPassword" class="text-light"><small>Lupa Password ?</small></a>
                         </div>
                         <div class="col-6 text-right">
-                            <small>Belum Punya akun ?. Silahkan <a href="<?= base_url() ?>auth/v_cekAnggota/" class="text-light">Daftar disini</small></a>
+                            <small>Sudah Punya akun ?. Silahkan <a href="<?= base_url() ?>auth" class="text-light">Login</small></a>
                         </div>
                     </div>
                 </div>

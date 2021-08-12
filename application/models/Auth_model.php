@@ -9,4 +9,10 @@ class Auth_model extends CI_Model
 
         return $result;
     }
+
+    public function addUser($data)
+    {
+        $this->db->insert('tbl_user', $data);
+        return $this->db->affected_rows() > 1 ? true : false;
+    }
 }

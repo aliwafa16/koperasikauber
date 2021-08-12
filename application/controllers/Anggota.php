@@ -5,8 +5,20 @@ class Anggota extends CI_Controller
     {
         parent::__construct();
         $this->load->Model('Anggota_Model');
+        $this->load->Model('Simpanan_Pokok_Model');
         $this->load->library('form_validation');
         $this->load->library('upload');
+
+        if (!$this->session->userdata('token')) {
+            $allowed = [];
+            if (!in_array($this->router->fetch_method(), $allowed)) {
+                redirect('auth');
+            }
+        }
+
+        if ($this->session->userdata('id_role') == 4) {
+            redirect('helper/index.html');
+        }
     }
 
     public function index()
@@ -54,6 +66,23 @@ class Anggota extends CI_Controller
 
     public function aktifAnggota($id)
     {
+
+        $simpanan_pokok = $this->db->get_where('tbl_simpanan_pokok', ['id_anggota' => $id])->row_array();
+
+        if ($simpanan_pokok['tanggal'] == '' || $simpanan_pokok['debet'] == 0) {
+            $tanggal = $this->formatDate(date('Y-m-d'));
+            $data = [
+                'tanggal' => $tanggal,
+                'debet' => intval(150000),
+                'credit' => 0,
+                'total' => intval(150000),
+                'updated_at' => date('d-m-Y H:i:s')
+            ];
+
+            $this->db->where('id_anggota', $id);
+            $this->db->update('tbl_simpanan_pokok', $data);
+        }
+
         $this->db->set('is_active', 1);
         $this->db->where('id_anggota', $id);
         $this->db->update('tbl_anggota');
@@ -161,12 +190,27 @@ class Anggota extends CI_Controller
                 'keterangan' => $this->input->post('keterangan', true),
                 'foto_anggota' => $this->_foto(),
                 'tanggal_masuk' => $tanggal,
+                'is_active' => 2,
                 'created_at' => date('d-m-Y H:i:s')
             ];
 
-            if ($this->Anggota_Model->add($data)) {
+            $result = $this->Anggota_Model->add($data);
+
+            $simpanan_pokok = [
+                'id_anggota' => $result['id'],
+                'kode_simpanan_pokok' => $this->kode_simpanan_pokok(),
+                'tanggal' => '',
+                'debet' => 0,
+                'credit' => intval(-150000),
+                'total' => intval(-150000),
+                'created_at' => date('d-m-Y H:i:s')
+            ];
+
+
+            if ($result['result']) {
                 $result = ['status' => false, 'alert' => 'Gagal DiTambahkan'];
             } else {
+                $this->Simpanan_Pokok_Model->add($simpanan_pokok);
                 $result = ['status' => true, 'alert' => 'Ditambahkan'];
             }
             echo json_encode($result);
@@ -279,5 +323,16 @@ class Anggota extends CI_Controller
 
         $split = explode('-', $tanggal);
         return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+    }
+
+    private function kode_simpanan_pokok()
+    {
+        $this->db->select_max('kode_simpanan_pokok');
+        $row = $this->db->get('tbl_simpanan_pokok')->row_array();
+        $nourut = intval(substr($row['kode_simpanan_pokok'], 0));
+
+        $nourut += 1;
+        $result = $nourut . '/AKUN' . '/KAUBER' . '/' . 'SP' . '/' . date('d.m.y') . '/' . date('Y');
+        return $result;
     }
 }

@@ -1,0 +1,21 @@
+*{
+   margin: 0;
+   padding: 0;
+   border: none;
+}
+
+body{
+   margin-left: 50px;
+   margin-right: 150px;
+}
+
+.container{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+}
+
+
+table.table1{
+   margin-bottom: 5px;
+}
