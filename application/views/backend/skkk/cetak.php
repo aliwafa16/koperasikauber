@@ -142,7 +142,7 @@
     </div>
     <table style="margin-top: 80px;">
         <tbody>
-            <td width="150" valign="top" style="text-align:center; position:absolute; left:700px">Bogor, <?= $tanggal ?> <br><br><br>
+            <td width="150" valign="top" style="text-align:center; position:absolute; left:700px">Bogor, <?= $tanggal_skkk ?> <br><br><br>
                 <b><u>PARID WAHDI., S.I</u></b><br>Ketua
             </td>
         </tbody>

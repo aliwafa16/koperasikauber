@@ -74,6 +74,17 @@ function SemuaAnggota(){
     },
     {
         render : function (data, type, full, meta){
+          if(full.is_kesepahaman==0){
+            var statkesepahaman = `<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-print"> Belum Cetak</i></button>`
+          }else if(full.is_kesepahaman==1){
+            var statkesepahaman = `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-print"> Sudah Cetak</i></button>`
+          }
+          return statkesepahaman;
+        },
+      className: "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
             return `<div class="row">
                       <div class="col-md-12">
                           <a href="${base_url}Anggota/detailAnggota/${full.id_anggota}" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></a>
@@ -152,6 +163,17 @@ function AnggotaAktif(){
             var buttonstatus = `<button type="button" onclick="btnAktifAnggota(${full.id_anggota})" class="btn btn-danger btn-sm"><i class="fa fa-times"> Tidak Aktif</i></button>`
           }
           return buttonstatus;
+        },
+      className: "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
+          if(full.is_kesepahaman==0){
+            var statkesepahaman = `<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-print"> Belum Cetak</i></button>`
+          }else if(full.is_kesepahaman==1){
+            var statkesepahaman = `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-print"> Sudah Cetak</i></button>`
+          }
+          return statkesepahaman;
         },
       className: "text-center"
     },
@@ -237,6 +259,17 @@ function AnggotaTidakAktif(){
         },
       className: "text-center"
     },
+        {
+        render : function (data, type, full, meta){
+          if(full.is_kesepahaman==0){
+            var statkesepahaman = `<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-print"> Belum Cetak</i></button>`
+          }else if(full.is_kesepahaman==1){
+            var statkesepahaman = `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-print"> Sudah Cetak</i></button>`
+          }
+          return statkesepahaman;
+        },
+      className: "text-center"
+    },
     {
         render : function (data, type, full, meta){
           return `<div class="row">
@@ -304,6 +337,17 @@ function Riwayat(){
         return full.jenis_kelamin
       },
           className: "text-center"
+    },
+            {
+        render : function (data, type, full, meta){
+          if(full.is_kesepahaman==0){
+            var statkesepahaman = `<button type="button" class="btn btn-warning btn-sm"><i class="fa fa-print"> Belum Cetak</i></button>`
+          }else if(full.is_kesepahaman==1){
+            var statkesepahaman = `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-print"> Sudah Cetak</i></button>`
+          }
+          return statkesepahaman;
+        },
+      className: "text-center"
     },
     {
         render : function (data, type, full, meta){
@@ -502,7 +546,6 @@ function btnNonAktifAnggota(id_anggota){
       grid_aktif.ajax.reload();
       grid_tidak_aktif.ajax.reload();
       grid_riwayat.ajax.reload();
-
   }
   })
 }

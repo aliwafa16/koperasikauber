@@ -89,37 +89,67 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div class="card">
-                            <h2 class="text-left pl-2 py-2">Keuangan</h2>
-                            <div class="table-responsive">
-                                <table class="table align-items-center table-flush" id="table_keuangan_details">
+                        <!-- <div class="card">
+                            <h2 class="text-left pl-2 py-2">Simpanan Wajib</h2>
+                            <div class="table-responsive pb-2">
+                                <table class="table align-items-center table-flush" id="table_keuangan_simpanan_wajib">
                                     <thead class="thead-light">
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th class="text-center">Nomor Kendaraan</th>
-                                            <th class="text-center">Merk / Type</th>
-                                            <th class="text-center">Tahun</th>
-                                            <th class="text-center">No Rangka</th>
-                                            <th class="text-center">No Mesin</th>
-                                            <th class="text-center">Warna</th>
-                                            <th class="text-center">Trayek</th>
+                                            <th class="text-center">Kode Simpanan Wajib</th>
+                                            <th class="text-center">Tanggal Bayar</th>
+                                            <th class="text-center">Debit</th>
+                                            <th class="text-center">Kredit</th>
+                                            <th class="text-center">Total</th>
+                                        </tr>
+                                        <?php $j = 1 ?>
+                                        <?php foreach ($anggota['simpanan_wajib'] as $simpanan_wajib) : ?>
+                                            <tr>
+                                                <th class="text-center"><?= $j ?></th>
+                                                <th class="text-center"><?= $simpanan_wajib['kode_simpanan_wajib'] ?></th>
+                                                <th class="text-center"><?= $simpanan_wajib['tanggal_bayar'] ?></th>
+                                                <th class="text-center"><?= $simpanan_wajib['debit'] ?></th>
+                                                <th class="text-center"><?= $simpanan_wajib['credit'] ?></th>
+                                                <th class="text-center"><?= $simpanan_wajib['total'] ?></th>
+                                            </tr>
+                                            <?php $j++ ?>
+                                        <?php endforeach; ?>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                        <div class="card">
+                            <h2 class="text-left pl-2 py-2">Simpanan Pokok</h2>
+                            <div class="table-responsive pb-2">
+                                <table class="table align-items-center table-flush" id="table_keuangan_simpanan_pokok">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Kode Simpanan Pokok</th>
+                                            <th class="text-center">Tanggal Bayar</th>
+                                            <th class="text-center">Debit</th>
+                                            <th class="text-center">Kredit</th>
+                                            <th class="text-center">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($anggota['kendaraan'] as $kendaraan) : ?>
+                                        <?php $k = 1; ?>
+                                        <?php foreach ($anggota['simpanan_pokok'] as $simpanan_pokok) : ?>
                                             <tr>
-                                                <td class="text-center"><?= $i; ?></td>
-                                                <td class="text-center"><?= $kendaraan['nomor_kendaraan'] ?></td>
-                                                <td class="text-center"><?= $kendaraan['merk_type']; ?></td>
-                                                <td class="text-center"><?= $kendaraan['tahun']; ?></td>
-                                                <td class="text-center"><?= $kendaraan['no_rangka']; ?></td>
-                                                <td class="text-center"><?= $kendaraan['no_mesin']; ?></td>
-                                                <td class="text-center"><?= $kendaraan['warna']; ?></td>
-                                                <td class="text-center"><?= $kendaraan['nama_trayek']; ?></td>
+                                                <td class="text-center"><?= $k ?></td>
+                                                <td class="text-center"><?= $simpanan_pokok['kode_simpanan_pokok'] ?></td>
+                                                <?php if ($simpanan_pokok['tanggal']) : ?>
+                                                    <td class="text-center"><?= $simpanan_pokok['tanggal'] ?></td>
+                                                <?php else : ?>
+                                                    <td class="text-center"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"> Belum bayar</i></button></td>
+                                                <?php endif; ?>
+                                                <td class="text-center"><?= $simpanan_pokok['debet'] ?></td>
+                                                <td class="text-center"><?= $simpanan_pokok['credit'] ?></td>
+                                                <td class="text-center"><?= $simpanan_pokok['total'] ?></td>
                                             </tr>
-                                            <?php $i++ ?>
+                                            <?php $k++; ?>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
@@ -139,7 +169,13 @@
                 "bInfo": false
             })
 
-            $('#table_keuangan_details').DataTable({
+            $('#table_keuangan_simpanan_pokok').DataTable({
+                "lengthChange": false,
+                'pageLength': 5,
+                "bInfo": false
+            })
+
+            $('#table_keuangan_simpanan_wajib').DataTable({
                 "lengthChange": false,
                 'pageLength': 5,
                 "bInfo": false

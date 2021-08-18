@@ -58,6 +58,9 @@ class Anggota_Model extends CI_Model
     {
         $anggota = $this->db->get_where('tbl_anggota', ['id_anggota' => $id])->row_array();
 
+        $simpanan_pokok = $this->db->get_where('tbl_simpanan_pokok', ['id_anggota' => $id])->result_array();
+        // $simpanan_wajib = $this->db->get_where('tbl_simpanan_wajib', ['id_anggota' => $id])->result_array();
+
         $this->db->select('*');
         $this->db->from('tbl_kendaraan');
         $this->db->join('tbl_trayek', 'tbl_trayek.id_trayek=tbl_kendaraan.id_trayek');
@@ -66,9 +69,12 @@ class Anggota_Model extends CI_Model
         $this->db->where('tbl_kepemilikan.id_anggota', $id);
         $kendaraan =  $this->db->get()->result_array();
 
+
         $data = [
             'anggota' => $anggota,
-            'kendaraan' => $kendaraan
+            'kendaraan' => $kendaraan,
+            'simpanan_pokok' => $simpanan_pokok,
+            // 'simpanan_wajib' => $simpanan_wajib
         ];
 
         return $data;

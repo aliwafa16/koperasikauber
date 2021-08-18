@@ -40,6 +40,7 @@
                                         <th class="text-center">NIK</th>
                                         <th class="text-center">Jenis Kelamin</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Kesepahaman</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -90,6 +91,7 @@
                                         <th class="text-center">NIK</th>
                                         <th class="text-center">Jenis Kelamin</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Kesepahaman</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -140,6 +142,7 @@
                                         <th class="text-center">NIK</th>
                                         <th class="text-center">Jenis Kelamin</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Kesepahaman</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -189,6 +192,7 @@
                                         <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">NIK</th>
                                         <th class="text-center">Jenis Kelamin</th>
+                                        <th class="text-center">Kesepahaman</th>
                                         <th class="text-center">Tanggal Keluar</th>
                                     </tr>
                                 </thead>

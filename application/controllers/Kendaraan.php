@@ -128,8 +128,10 @@ class Kendaraan extends CI_Controller
     }
 
     public function editKepemilikan($id){
+        $id_pemilik_baru = $this->input->post('id_pemilik_baru');
+        
         $data = [
-            'id_anggota' => $this->input->post('id_anggota'),
+            'id_anggota' => $id_pemilik_baru,
             'updated_at' => date('d-m-Y H:i:s')
         ];
 
@@ -175,12 +177,13 @@ class Kendaraan extends CI_Controller
 
         $data = $this->Anggota_Model->searchAnggota($key);
 
-        if ($data != null) {
-            echo json_encode($data);
+        if ($data) {
+            $result = ['status' => true, 'data' => $data];
         } else {
             $result = ['status' => false, 'alert' => 'Data Anggota Tidak Ditemukan'];
-            echo json_encode($result);
         }
+
+        echo json_encode($result);
     }
 
     public function hapusKendaraan($id)

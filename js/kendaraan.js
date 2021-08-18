@@ -189,26 +189,52 @@ $("#btn_cari_anggota").on("click", function (e) {
 				$(".not_found").text(data.alert);
 				$(".result-search").html("");
 			} else {
-				if (data.is_active == 1) {
+				let anggota = data.data
+				if (anggota.is_active == 1) {
 					var stat = `<button type="button" class="btn btn-sm btn-success" style="color: white;">Aktif</button>`;
-				} else if (data.is_active == 2) {
+				} else if (anggota.is_active == 2) {
 					var stat = `<button type="button" class="btn btn-sm btn-danger" style="color: white;">Tidak Aktif</button>`;
+				}else if(anggota.is_active ==3){
+					var stat = `<button type="button" class="btn btn-sm btn-dark" style="color: white;">keluar</button>`;
 				}
+
+				if(anggota.is_kesepahaman==1){
+					var stat_kesepahaman = `<button type="button" class="btn btn-sm btn-success" style="color: white;">Sudah cetak</button>`
+				}else{
+					var stat_kesepahaman = `<button type="button" class="btn btn-sm btn-warning" style="color: white;">Belum cetak</button>`
+				}
+
 				$(".not_found").text("");
+
+				if(!anggota.foto_anggota){
+					var foto = 'user_default.png'
+				}else{
+					var foto = anggota.foto_anggota
+				}
 				$(".result-search").html(
 					`
           <div class="col-md-12 text-center">
-              <img src="${base_url}assets/foto_anggota/${data.foto_anggota}" alt=" foto_anggota" class="img-thumbnail rounded-circle mb-2 mt-3" style="width: 150px; height: 150px;">
-              <p class="fs-3 text-monospace mt-0">${data.kode_anggota}</p>
-              <p class="fs-2 font-weight-bold mt-0">${data.nama_anggota}</p>
-              ` +
-						stat +
-						`
+              <img src="${base_url}assets/foto_anggota/${foto}" alt=" foto_anggota" class="img-thumbnail rounded-circle mb-2 mt-3" style="width: 150px; height: 150px;">
+              <p class="fs-3 text-monospace mt-0">${anggota.kode_anggota}</p>
+              <p class="fs-2 font-weight-bold mt-0">${anggota.nama_anggota}</p>
+              <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Kesepahaman</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+									<tr>
+                                        <th class="text-center">`+stat+`</th>
+                                        <th class="text-center">`+stat_kesepahaman+`</th>
+                                    </tr>
+                                </tbody>
           </div>
         `
 				);
 
-				$("#id_anggota").val(data.id_anggota);
+				$("#id_anggota").val(anggota.id_anggota);
 			}
 		},
 	});
@@ -231,6 +257,8 @@ function kepemilikan_kendaraan(id) {
 				var stats = `  <span class="badge badge-success">Aktif</span>`;
 			} else if (data.is_active == 2) {
 				var stats = `  <span class="badge badge-danger">Tidak Aktif</span>`;
+			} else if(data.is_active==3){
+				var stats = `  <span class="badge badge-dark">Keluar</span>`;
 			}
 			$("#pemilik_awal").val(data.nama_anggota);
 			$("label[for='pemilik_awal']").append(stats);
@@ -240,7 +268,7 @@ function kepemilikan_kendaraan(id) {
 	$("#submit_kepemilikan_kendaraan").on("click", function (e) {
 		e.preventDefault();
 		let data = {
-			id_anggota: $("#id_anggota").val(),
+			id_pemilik_baru: $("#id_anggota").val(),
 		};
 		$.ajax({
 			url: base_url + "Kendaraan/editKepemilikan/" + id,
@@ -265,6 +293,7 @@ $("#key_anggota").on("keyup", function () {
 		$("#pemilik_baru").val("");
 		$("#kode_anggota").val("");
 		$(".not_found").text("");
+		$("label[for='pemilik_baru']").html("");
 	} else {
 		$.ajax({
 			url: base_url + "Kendaraan/searchAnggota",
@@ -273,21 +302,38 @@ $("#key_anggota").on("keyup", function () {
 			data: { key: key },
 			success: function (data) {
 				console.log(data);
-
-				if (data.is_active == 1) {
+				if(data.status){
+				let anggota = data.data;
+				if (anggota.is_active == 1) {
 					var stats = `  <span class="badge badge-success">Aktif</span>`;
-				} else if (data.is_active == 2) {
+				} else if (anggota.is_active == 2) {
 					var stats = `  <span class="badge badge-danger">Tidak Aktif</span>`;
+				}else if(anggota.is_active==3){
+					var stats = `  <span class="badge badge-dark">Keluar</span>`;
 				}
 
-				if (data.status == false) {
+
+				if(anggota.is_kesepahaman==1){
+					var stat_kesepahaman = `<span class="badge badge-success">Sudah cetak</span>`
+				}else{
+					var stat_kesepahaman = `<span class="badge badge-warning">Belum cetak</span>`
+				}
+
+
+
+
+				$("#pemilik_baru").val(anggota.nama_anggota);
+				$("#kode_anggota").val(anggota.kode_anggota);
+				$("#id_anggota").val(anggota.id_anggota);
+				$("label[for='pemilik_baru']").append(stats+' '+stat_kesepahaman);
+				}else{
 					$(".not_found").text(data.alert);
+					$("#pemilik_baru").val("");
+					$("#kode_anggota").val("");
+					$(".not_found").text("");
+					$("label[for='pemilik_baru']").html("");
+					$("#id_anggota").val('');
 				}
-
-				$("#pemilik_baru").val(data.nama_anggota);
-				$("#kode_anggota").val(data.kode_anggota);
-				$("#id_anggota").val(data.id_anggota);
-				$("label[for='pemilik_baru']").append(stats);
 			},
 		});
 	}

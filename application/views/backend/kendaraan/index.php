@@ -92,9 +92,9 @@
                     <div class="container">
                         <form action="" method="POST" id="form-edit-kendaraan">
                             <div class="form-group">
-                                <input type="text" name="id_kendaraan" id="id_kendaraan">
-                                <input type="text" name="created_at" id="created_at">
-                                <input type="text" name="is_active" id="is_active">
+                                <input type="hidden" name="id_kendaraan" id="id_kendaraan">
+                                <input type="hidden" name="created_at" id="created_at">
+                                <input type="hidden" name="is_active" id="is_active">
                                 <label for="nomor_kendaraan">Nomor Kendaraan</label>
                                 <input type="text" class="form-control form-control-sm" id="nomor_kendaraan" name="nomor_kendaraan">
                                 <div class="text-danger" id="nomor_kendaraan_error"></div>
@@ -208,8 +208,7 @@
                             <label for="kode_anggota">Kode Anggota</label>
                             <input type="text" class="form-control" id="kode_anggota" name="kode_anggota" readonly>
                         </div>
-
-                        <input type="text" id="id_anggota" name="id_anggota">
+                        <input type="hidden" id="id_anggota" name="id_anggota">
 
                 </div>
                 <div class="modal-footer">

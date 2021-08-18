@@ -273,8 +273,12 @@ class Anggota extends CI_Controller
         @unlink(FCPATH . './assets/foto_anggota/' . $old_image);
 
         $deleted = [
-            'deleted_at' => date('d-m-Y H:i:s')
+            'deleted_at' => date('d-m-Y H:i:s'),
+            'is_active' => 3,
+            'foto_anggota' => ''
         ];
+
+
 
         $this->db->where('id_anggota', $id);
         $this->db->update('tbl_anggota', $deleted);

@@ -7,7 +7,8 @@
                 </div>
                 <div class="col-md-4 py-1">
                     <nav class="nav" id="nav-tab">
-                        <a href="#semua_skkk" class="btn btn-sm btn-primary mb-2 nav-item nav-link" style="color: white;" data-toggle="tab">Semua</a>
+                        <a href="#semua_kesepahaman" class="btn btn-sm btn-primary mb-2 nav-item nav-link" style="color: white;" data-toggle="tab">Semua</a>
+                        <a href="#keluar" class="btn btn-sm btn-danger mb-2 nav-item nav-link" style="color: white;" data-toggle="tab">Keluar</a>
                         <a href="#riwayat" class="btn btn-sm btn-warning mb-2 nav-item nav-link" style="color: white;" data-toggle="tab">Riwayat</a>
                     </nav>
                 </div>
@@ -22,23 +23,20 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <a href="<?= base_url() ?>SKKK/addSKKK/" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data SKKK</a>
+                    <a href="<?= base_url() ?>Kesepahaman/addKesepahaman/" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data Kesepahaman</a>
                 </div>
                 <!-- Light table -->
                 <div class="tab-content mb-2" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="semua_skkk" role="tabpanel">
-                        <p class="text-primary fs-4 pl-4 py-2" style="font-weight: bold;">Rekap Cetak SKKK</p>
+                    <div class="tab-pane fade show active" id="semua_kesepahaman" role="tabpanel">
+                        <p class="text-primary fs-4 pl-4 py-2" style="font-weight: bold;">Rekap Cetak Kesepahaman</p>
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush" id="table_semua_skkk" style="width: 100%;">
+                            <table class="table align-items-center table-flush" id="table_semua_kesepahaman" style="width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Kode SKKK</th>
                                         <th class="text-center">Kode Kesepahaman</th>
-                                        <th class="text-center">Pemilik</th>
-                                        <th class="text-center">Nomor Kendaraan</th>
-                                        <th class="text-center">Nomor Mesin</th>
-                                        <th class="text-center">Trayek</th>
+                                        <th class="text-center">Kode Anggota</th>
+                                        <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">Tanggal Cetak</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -49,20 +47,36 @@
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="keluar" role="tabpanel">
+                        <p class="text-danger fs-4 pl-4" style="font-weight: bold;">Kesepahaman Anggota Keluar</p>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush" id="table_keluar" style="width: 100%;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th class="text-center">Kode Kesepahaman</th>
+                                        <th class="text-center">Kode Anggota</th>
+                                        <th class="text-center">Nama Anggota</th>
+                                        <th class="text-center">Tanggal Cetak</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="tab-pane fade" id="riwayat" role="tabpanel">
-                        <p class="text-warning fs-4 pl-4" style="font-weight: bold;"> Riwayat Cetak SKKK</p>
+                        <p class="text-warning fs-4 pl-4" style="font-weight: bold;">Riwayat Kesepahaman</p>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush" id="table_riwayat" style="width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Kode SKKK</th>
                                         <th class="text-center">Kode Kesepahaman</th>
-                                        <th class="text-center">Pemilik</th>
-                                        <th class="text-center">Nomor Kendaraan</th>
-                                        <th class="text-center">Nomor Mesin</th>
-                                        <th class="text-center">Trayek</th>
-                                        <th class="text-center">Tanggal Cetak</th>
+                                        <th class="text-center">Kode Anggota</th>
+                                        <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">Tanggal Hapus</th>
                                     </tr>
                                 </thead>
@@ -81,4 +95,4 @@
 
 
     <!-- Modal -->
-    <script src="<?= base_url() ?>js/skkk.js"></script>
+    <script src="<?= base_url() ?>js/kesepahaman.js"></script>

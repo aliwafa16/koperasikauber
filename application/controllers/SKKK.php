@@ -35,6 +35,12 @@ class SKKK extends CI_Controller
         echo json_encode($result);
     }
 
+    public function get_riwayat_SKKK()
+    {
+        $result = $this->SKKK_Model->getRiwayat();
+        echo json_encode($result);
+    }
+
     public function addSKKK()
     {
         $data['title'] = 'Kauber - Tambah SKKK';
@@ -48,28 +54,33 @@ class SKKK extends CI_Controller
         $this->load->view('backend/templates/admin_footer');
     }
 
-    public function searchData($key)
+    public function searchData()
     {
+        $key = $this->input->post('key');
         $anggota = $this->SKKK_Model->search_anggota($key);
         if ($anggota) {
-            $kesepahaman = $this->SKKK_Model->search_kesepahaman($anggota['id_anggota']);
-            if ($kesepahaman) {
-                $kendaraan = $this->SKKK_Model->search_kendaraan($anggota['id_anggota']);
-                if ($kendaraan) {
-                    $result = [
+            if ($anggota['is_active'] == 1) {
+                $kesepahaman = $this->SKKK_Model->search_kesepahaman($anggota['id_anggota']);
+                if ($kesepahaman) {
+                    $kendaraan = $this->SKKK_Model->search_kendaraan($anggota['id_anggota']);
+                    if ($kendaraan) {
+                        $result = [
                         'status' => true,
                         'anggota' => $anggota,
                         'kesepahaman' => $kesepahaman,
                         'kendaraan' => $kendaraan
                     ];
+                    } else {
+                        $result = ['status' => false, 'alert' => 'Kendaraan Tidak Ditemukan'];
+                    }
                 } else {
-                    $result = ['status' => false, 'alert' => 'Kendaraan Tidak Ditemukan'];
+                    $result = ['status' => false, 'alert' => 'Kesepahaman Tidak Ditemukan'];
                 }
             } else {
-                $result = ['status' => false, 'alert' => 'Kesepahaman Tidak Ditemukan'];
+                $result = ['status' => false, 'alert' => 'Anggota tidak aktif / sudah keluar !!'];
             }
         } else {
-            $result = ['status' => false, 'alert' => 'Anggota Tidak Ditemukan !!'];
+            $result = ['status' => false, 'alert' => 'Anggota tidak ditemukan !!'];
         }
 
         echo json_encode($result);
@@ -99,15 +110,15 @@ class SKKK extends CI_Controller
             'no_rangka' => $this->input->get('no_rangka'),
             'no_mesin' => $this->input->get('no_mesin'),
             'warna' => $this->input->get('warna'),
-            'tanggal' => $tanggal,
+            'tanggal_skkk' => $tanggal,
         ];
 
         if ($this->input->get('no_kesepahaman')) {
             $data_db = [
                 'no_skkk' => $data['no_skkk'],
                 'id_kesepahaman' => $data['id_kesepahaman'],
-                'tanggal_skkk' => $data['tanggal'],
-                'id_kepemilikan' => $data['id_kendaraan'],
+                'tanggal_skkk' => $data['tanggal_skkk'],
+                'id_kendaraan' => $data['id_kendaraan'],
                 'keterangan' => null,
                 'created_at' => date('d-m-Y H:i:s')
 
@@ -119,6 +130,26 @@ class SKKK extends CI_Controller
         }
     }
 
+    public function hapus($id)
+    {
+        $data = [
+            'deleted_at' => date('d-m-Y H:i:s')
+        ];
+
+        $this->db->where('id_skkk', $id);
+        $this->db->update('tbl_skkk', $data);
+
+
+        $result = ['status' => true, 'alert' => 'Dihapus'];
+
+        echo json_encode($result);
+    }
+
+    public function RepeatPrint($id)
+    {
+        $data = $this->SKKK_Model->printlagi($id);
+        $this->load->view('backend/skkk/cetak', $data);
+    }
 
     private function kode_SKKK()
     {
@@ -131,6 +162,7 @@ class SKKK extends CI_Controller
         $result = $nourut . '/SKKK-Kop' . '/' . $bulan . '/' . date('Y');
         return $result;
     }
+
 
     private function formatDate($bln)
     {
