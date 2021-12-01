@@ -59,14 +59,14 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <!-- <div class="row mt-3">
                         <div class="col-6">
                             <a href="<?= base_url() ?>auth/lupaPassword" class="text-light"><small>Lupa Password ?</small></a>
                         </div>
                         <div class="col-6 text-right">
                             <small>Belum Punya akun ?. Silahkan <a href="<?= base_url() ?>auth/v_cekAnggota/" class="text-light">Daftar disini</small></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

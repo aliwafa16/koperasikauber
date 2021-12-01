@@ -5,6 +5,7 @@ class Simpanan_Pokok extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Simpanan_Pokok_Model');
+        $this->load->library('form_validation');
 
         if (!$this->session->userdata('token')) {
             $allowed = [];
@@ -39,5 +40,11 @@ class Simpanan_Pokok extends CI_Controller
     {
         $result = $this->Simpanan_Pokok_Model->riwayat();
         echo json_encode($result);
+    }
+
+    public function addSimpananPokok(){
+        $this->form_validation->set_rules('kode_anggota', 'Kode Anggota', 'required|trim', ['required' => 'Kode harus diisi !!']);
+        $this->form_validation->set_rules('nama_anggota', 'Nama Anggota', 'required|trim', ['required' => 'Nama harus diisi !!']);
+        $this->form_validation->set_rules('nik_anggota', 'NIK Anggota', 'required|trim', ['required' => 'NIK harus diisi !!']);
     }
 }

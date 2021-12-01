@@ -38,18 +38,6 @@ function simpananPokok(){
 
     {
       render: function (data, type, full, meta) {
-          if(full.tanggal==''){
-              return `<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"> Belum bayar</i></button>`
-          }else{
-               return full.tanggal
-          }
-         
-      },
-          className: "text-center"
-    },
-
-    {
-      render: function (data, type, full, meta) {
         return full.nama_anggota
       },
           className: "text-center"
@@ -124,18 +112,6 @@ function riwayat(){
 
     {
       render: function (data, type, full, meta) {
-          if(full.tanggal==''){
-              return `<button type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"> Belum bayar</i></button>`
-          }else{
-               return full.tanggal
-          }
-         
-      },
-          className: "text-center"
-    },
-
-    {
-      render: function (data, type, full, meta) {
         return full.nama_anggota
       },
           className: "text-center"
@@ -167,3 +143,40 @@ function riwayat(){
     ],
   });
 }
+
+
+function addSimpananPokok(){
+  save = 'add';
+  $('#form_simpanan_pokok')[0].reset();
+  $('#simpananPokokModal').modal('show');
+  $('#simpananPokokModalLabel').text('Tambah Data Simpanan Pokok');
+  $('#submit_simpan_pokok').text('Tambah Data');
+  $('#cancel_simpan_pokok').text('Batal')
+  $('#submit_simpan_pokok').attr('disabled', false)
+  $('#cancel_simpan_pokok').on('click', function(){
+    $('#cancel_simpan_pokok').modal('hide')
+  });
+  $('.text-danger').empty();
+}
+
+
+$('#submit_simpan_pokok').on('click', function(e){
+  e.preventDefault();
+
+  if(save=='add'){
+    let formData = new FormData($('#form_simpanan_poko'));
+    $.ajax({
+      url:base_url+'Simpanan_Pokok/addSimpananPokok/',
+      type:'POST',
+      dataType: 'JSON',
+      contentType : false,
+      processData : false,
+      data:formData,
+      success: function(data){
+
+      }
+    })
+  }else{
+
+  }
+})

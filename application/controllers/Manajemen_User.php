@@ -61,6 +61,11 @@ class Manajemen_User extends CI_Controller{
         echo json_encode($result);
     }
 
+    public function getUser($id){
+        $result = $this->User_Model->oneUser($id);
+        echo json_encode($result);
+    }
+
     public function searchAnggota(){
         $key = $this->input->post('key');
         $this->db->select('kode_anggota,nama_anggota,id_anggota');
@@ -127,6 +132,37 @@ class Manajemen_User extends CI_Controller{
             $this->db->update('tbl_user');
     
             $result = ['status' => true, 'alert' => 'Password berhasil diubah'];
+            echo json_encode($result);
+        }
+    }
+
+    public function editUser(){
+        $this->form_validation->set_rules('user_name', 'Nama user', 'required|trim', ['required' => 'Nama harus diisi !!']);
+        $this->form_validation->set_rules('email_user', 'email_user', 'required|trim|valid_email', ['required' => 'Email harus diisi !!', 'valid_email' => 'Format email salah !!']);
+
+        if($this->form_validation->run()==FALSE){
+            $array = [
+                'user_name_error' => form_error('user_name'),
+                'email_user_error' => form_error('email_user'),
+            ];
+            echo json_encode($array);
+        }else{
+            $tanggal = $this->formatDate(date('Y-m-d'));
+            $id = $this->input->post('id_user');
+            $data = [
+                'nama_user' => $this->input->post('user_name'),
+                'kode_anggota' => $this->input->post('kode_anggota'),
+                'email_user' => $this->input->post('email_user'),
+                'updated_at' => $tanggal
+
+            ];
+
+            if($this->User_Model->edit($data, $id)){
+                $result = ['status' => true, 'alert' => 'Ditambahkan'];
+            }else{
+                $result = ['status' => false, 'alert' => 'Gagal DiTambahkan'];
+            }
+
             echo json_encode($result);
         }
     }

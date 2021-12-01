@@ -260,10 +260,8 @@
                             <input type="text" class="form-control" id="user_name" name="user_name">
                             <div class="text-danger" id="user_name_error"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password">
-                            <div class="text-danger" id="password_error"></div>
+                        <div class="form-group field_password">
+                            
                         </div>
                         <div class="form-group">
                             <label for="role_id">Status</label>
@@ -271,7 +269,7 @@
 
                             </select>
                         </div>
-                        <input type="hidden" id="id_anggota" name="id_anggota">
+                        <input type="hidden" id="id_user" name="id_user">
 
                 </div>
                 <div class="modal-footer">

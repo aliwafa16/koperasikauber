@@ -472,10 +472,10 @@ $('#submit_anggota').on('click', function(e){
                 sukses(data.alert);
                 $('#form-anggota')[0].reset();
                 $('#modalAnggota').modal('hide');
-      grid_all.ajax.reload();
-      grid_aktif.ajax.reload();
-      grid_tidak_aktif.ajax.reload();
-      grid_riwayat.ajax.reload();
+                grid_all.ajax.reload();
+                grid_aktif.ajax.reload();
+                grid_tidak_aktif.ajax.reload();
+                grid_riwayat.ajax.reload();
             }else{
                 $('#nama_anggota_error').html(data.nama_anggota_error);
                 $('#nik_anggota_error').html(data.nik_anggota_error);
@@ -505,10 +505,10 @@ $('#submit_anggota').on('click', function(e){
                 sukses(data.alert);
                 $('#form-anggota')[0].reset();
                 $('#modalAnggota').modal('hide');
-      grid_all.ajax.reload();
-      grid_aktif.ajax.reload();
-      grid_tidak_aktif.ajax.reload();
-      grid_riwayat.ajax.reload();
+                grid_all.ajax.reload();
+                grid_aktif.ajax.reload();
+                grid_tidak_aktif.ajax.reload();
+                grid_riwayat.ajax.reload();
             }
         }
     })

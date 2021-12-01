@@ -194,25 +194,22 @@ class Anggota extends CI_Controller
                 'created_at' => date('d-m-Y H:i:s')
             ];
 
-            $result = $this->Anggota_Model->add($data);
-
-            $simpanan_pokok = [
-                'id_anggota' => $result['id'],
-                'kode_simpanan_pokok' => $this->kode_simpanan_pokok(),
-                'tanggal' => '',
-                'debet' => 0,
-                'credit' => intval(-150000),
-                'total' => intval(-150000),
-                'created_at' => date('d-m-Y H:i:s')
-            ];
-
-
-            if ($result['result']) {
+            if($this->Anggota_Model->add($data)){
                 $result = ['status' => false, 'alert' => 'Gagal DiTambahkan'];
-            } else {
-                $this->Simpanan_Pokok_Model->add($simpanan_pokok);
+            }else{
                 $result = ['status' => true, 'alert' => 'Ditambahkan'];
             }
+
+            // $simpanan_pokok = [
+            //     'id_anggota' => $result['id'],
+            //     'kode_simpanan_pokok' => $this->kode_simpanan_pokok(),
+            //     'tanggal' => '',
+            //     'debet' => 0,
+            //     'credit' => intval(-150000),
+            //     'total' => intval(-150000),
+            //     'created_at' => date('d-m-Y H:i:s')
+            // ];
+
             echo json_encode($result);
         }
     }

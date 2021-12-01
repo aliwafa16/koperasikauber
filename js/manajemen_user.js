@@ -77,8 +77,8 @@ function SemuaUser(){
         render:function(data, type, full, meta){
           return `<div class="row">
                       <div class="col-md-12">
-                          <a href="${base_url}Anggota/detailAnggota/${full.id_user}" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></a>
-                          <button onclick="edit_anggota(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                          
+                          <button onclick="edit_user(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
                           <button onclick="hapus_user(${full.id_user})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                       </div>
                   </div>`
@@ -167,8 +167,8 @@ function UserAktif(){
         render : function (data, type, full, meta){
             return `<div class="row">
                       <div class="col-md-12">
-                          <a href="${base_url}Anggota/detailAnggota/${full.id_user}" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></a>
-                          <button onclick="edit_anggota(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                          
+                          <button onclick="edit_user(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
                           <button onclick="hapus_user(${full.id_user})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                       </div>
                   </div>`
@@ -256,8 +256,8 @@ function UserTidakAktif(){
         render : function (data, type, full, meta){
             return `<div class="row">
                       <div class="col-md-12">
-                          <a href="${base_url}Anggota/detailAnggota/${full.id_user}" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></a>
-                          <button onclick="edit_anggota(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                          
+                          <button onclick="edit_user(${full.id_user})" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
                           <button onclick="hapus_user(${full.id_user})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                       </div>
                   </div>`
@@ -333,18 +333,14 @@ function addUser(){
     $('#cancel_user').modal('hide')
   });
   $('.text-danger').empty();
-
-  $.ajax({
-    url : base_url+'Manajemen_User/getRole/',
-    type : 'GET',
-    dataType : 'JSON',
-    success : function(data){
-      data.forEach(element => {
-        $('#role_id').append(`<option value="${element.id_role}">${element.nama_role}</option>`)
-      });
-    }
-  })
+  $('.field_password').html(`<label for="password">Password</label>
+  <input type="text" class="form-control" id="password" name="password">
+  <div class="text-danger" id="password_error"></div>`)
+  
+  $('#role_id').html('')
+  getRole()
 }
+
 
 
 $("#key_anggota").on('keyup', function(){
@@ -377,41 +373,103 @@ $("#key_anggota").on('keyup', function(){
   }
 })
 
-$('#submit_user').on('click',function(e){
-  save = 'add'
-  e.preventDefault();
-  var formData = new FormData($("#form_user")[0]);
-
+function edit_user(id){
+  save = 'edit';
+  $('#addUserModal').modal('show');
+  $('#addUserModalLabel').text('Edit data user');
+  $('#submit_user').text('Edit Data');
+  $('#cancel_user').text('Batal')
+  $('#submit_user').attr('disabled', false)
+  $('#cancel_user').on('click', function(){
+    $('#cancel_user').modal('hide')
+    $("#key_anggota").val("");
+		$("#kode_anggota").val("");
+	  $("#nama_anggota").val("");
+		$("#user_name").val("");
+		$("#email_user").val("");
+		$("#password").val("");
+  });
+  $('#role_id').html('')
+  $('.field_password').html('');
+  $('.text-danger').empty();
+  
   $.ajax({
-    url:base_url+'Manajemen_User/addUser/',
-    type : 'POST',
+    url : base_url+'Manajemen_User/getUser/'+id,
+    type:'GET',
     dataType :'JSON',
-    contentType: false,
-		processData: false,
-    data : formData,
     success : function(data){
-      if(data.status){
-        sukses(data.alert);
-        $("#key_anggota").val("");
-				$("#kode_anggota").val("");
-				$("#nama_anggota").val("");
-				$("#user_name").val("");
-				$("#email_user").val("");
-				$("#password").val("");
-        $("#addUserModal").modal("hide");
-        grid_all.ajax.reload();
-        grid_aktif.ajax.reload();
-        grid_tidak_aktif.ajax.reload();
-        grid_riwayat.ajax.reload();
-      }else if(data.status==false){
-        error('Kode anggota sudah digunakan');
-      }else {
-        $("#email_user_error").html(data.email_user_error);
-				$("#user_name_error").html(data.user_name_error);
-				$("#password_error").html(data.password_error);
-      }
+      getRole()
+      console.log(data)
+      $('#nama_anggota').val(data.nama_anggota);
+      $('#kode_anggota').val(data.kode_anggota);
+      $('#email_user').val(data.email_user);
+      $('#user_name').val(data.nama_user);
+      $('#id_user').val(data.id_user)
     }
   })
+
+}
+
+$('#submit_user').on('click',function(e){
+
+  if(save=='add'){
+    e.preventDefault();
+    var formData = new FormData($("#form_user")[0]);
+    $.ajax({
+      url:base_url+'Manajemen_User/addUser/',
+      type : 'POST',
+      dataType :'JSON',
+      contentType: false,
+      processData: false,
+      data : formData,
+      success : function(data){
+        if(data.status){
+          sukses(data.alert);
+          $("#key_anggota").val("");
+          $("#kode_anggota").val("");
+          $("#nama_anggota").val("");
+          $("#user_name").val("");
+          $("#email_user").val("");
+          $("#password").val("");
+          $("#addUserModal").modal("hide");
+          grid_all.ajax.reload();
+          grid_aktif.ajax.reload();
+          grid_tidak_aktif.ajax.reload();
+          grid_riwayat.ajax.reload();
+        }else if(data.status==false){
+          error('Kode anggota sudah digunakan');
+        }else {
+          $("#email_user_error").html(data.email_user_error);
+          $("#user_name_error").html(data.user_name_error);
+          $("#password_error").html(data.password_error);
+        }
+      }
+    })
+  }else if(save=='edit'){
+    var formData = new FormData($('#form_user')[0]);
+    $.ajax({
+        url : base_url + 'Manajemen_User/editUser',
+        type : 'POST',
+        data : formData,
+        contentType : false,
+        processData : false,
+        dataType : 'JSON',
+        success : function(data) {
+            if(data.status){
+                sukses(data.alert);
+                $('#form_user')[0].reset();
+                $("#addUserModal").modal("hide");
+                grid_all.ajax.reload();
+                grid_aktif.ajax.reload();
+                grid_tidak_aktif.ajax.reload();
+                grid_riwayat.ajax.reload();
+            }else{
+                $("#email_user_error").html(data.email_user_error);
+                $("#user_name_error").html(data.user_name_error);
+            }
+        }
+    })
+  }
 })
 
 function edit_password(id){
@@ -426,6 +484,7 @@ function edit_password(id){
   });
   $('.text-danger').empty();
 
+  
 
   $('#submit_edit_password').on('click',function(e){
     e.preventDefault();
@@ -474,6 +533,19 @@ function hapus_user(id){
       grid_riwayat.ajax.reload();
           }
         })
+    }
+  })
+}
+
+function getRole(){
+  $.ajax({
+    url : base_url+'Manajemen_User/getRole/',
+    type : 'GET',
+    dataType : 'JSON',
+    success : function(data){
+      data.forEach(element => {
+        $('#role_id').append(`<option value="${element.id_role}">${element.nama_role}</option>`)
+      });
     }
   })
 }
