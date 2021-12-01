@@ -29,5 +29,12 @@ class Simpanan_Pokok_Model extends CI_Model
     public function add($data)
     {
         $this->db->insert('tbl_simpanan_pokok', $data);
+        return $this->db->insert_id();
+    }
+
+    public function addRiwayatSP($data)
+    {
+        $this->db->insert('tbl_sp_riwayat', $data);
+        return $this->db->affected_rows() > 1 ? true : false;
     }
 }

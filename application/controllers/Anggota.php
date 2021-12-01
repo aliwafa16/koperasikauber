@@ -326,14 +326,5 @@ class Anggota extends CI_Controller
         return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
     }
 
-    private function kode_simpanan_pokok()
-    {
-        $this->db->select_max('kode_simpanan_pokok');
-        $row = $this->db->get('tbl_simpanan_pokok')->row_array();
-        $nourut = intval(substr($row['kode_simpanan_pokok'], 0));
 
-        $nourut += 1;
-        $result = $nourut . '/AKUN' . '/KAUBER' . '/' . 'SP' . '/' . date('d.m.y') . '/' . date('Y');
-        return $result;
-    }
 }

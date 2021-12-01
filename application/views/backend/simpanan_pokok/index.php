@@ -34,7 +34,6 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Kode Simpanan Pokok</th>
-                                        <th class="text-center">Tanggal Bayar</th>
                                         <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">Debit (RP)</th>
                                         <th class="text-center">Credit (RP)</th>
@@ -56,7 +55,6 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Kode Simpanan Pokok</th>
-                                        <th class="text-center">Tanggal Bayar</th>
                                         <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">Debit (RP)</th>
                                         <th class="text-center">Credit (RP)</th>
@@ -99,6 +97,14 @@
                                 <h4 class="text-danger not_found"></h4>
                             </div>
                         </div>
+
+
+                        <input type="hidden" class="form-control" id="id_simpanan_pokok" name="id_simpanan_pokok" readonly>
+                        <input type="hidden" class="form-control" id="created_at" name="created_at" readonly>
+                        <input type="hidden" class="form-control" id="kode_simpanan_pokok" name="kode_simpanan_pokok" readonly>
+                        <input type="hidden" class="form-control" id="id_anggota" name="id_anggota" readonly>
+
+
                         <div class="form-group">
                             <label for="nama_anggota">Nama Anggota</label>
                             <input type="text" class="form-control" id="nama_anggota" name="nama_anggota" readonly>
