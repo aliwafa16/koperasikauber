@@ -35,6 +35,7 @@ class Auth extends CI_Controller
                         'email_user' => $user['email_user'],
                         'id_role' => $user['id_role'],
                         'id_user' => $user['id_user'],
+                        'kode_anggota' => $user['kode_anggota'],
                         'nama_user' => $user['nama_user'],
                         'token' => md5(uniqid())
                     ];

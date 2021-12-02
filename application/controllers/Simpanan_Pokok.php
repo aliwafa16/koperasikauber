@@ -152,6 +152,17 @@ class Simpanan_Pokok extends CI_Controller
         echo json_encode($result);
     }
 
+    public function hapus($id){
+        $deleted = date('d-m-Y H:i:s');
+        $this->db->set('deleted_at',$deleted);
+        $this->db->where('id_simpanan_pokok', $id);
+        $this->db->update('tbl_simpanan_pokok');
+
+        $result = ['status' => true, 'alert' => 'Dihapus'];
+        echo json_encode($result);
+
+    }
+
     private function formatDate($tanggal)
     {
         $bulan = [

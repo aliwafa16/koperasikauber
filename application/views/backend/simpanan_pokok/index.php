@@ -59,7 +59,8 @@
                                         <th class="text-center">Debit (RP)</th>
                                         <th class="text-center">Credit (RP)</th>
                                         <th class="text-center">Total (RP)</th>
-                                        <th class="text-center">Tanggal Anggota Keluar</th>
+                                        <th class="text-center">Detail</th>
+                                        <th class="text-center">Tanggal dihapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -132,6 +133,37 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="detailSPModal" tabindex="-1" aria-labelledby="detailSPModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailSPModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table text-center" id="table_detail_sp">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Nominal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="isi_table_detail">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn_detail" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- Modal -->

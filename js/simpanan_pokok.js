@@ -136,6 +136,16 @@ function riwayat(){
     },
     {
         render : function (data, type, full, meta){
+            return `<div class="row">
+                      <div class="col-md-12">
+                          <button onclick="detail_sp(${full.id_simpanan_pokok})" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
+                      </div>
+                  </div>`
+        },
+      className: "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
             return full.deleted_at
         },
       className: "text-center"
@@ -274,12 +284,54 @@ $('#submit_simpan_pokok').on('click', function(e){
 
 
 function detail_sp(id){
+  $('#detailSPModal').modal('show');
+  $('#detailSPModalLabel').text('Riwayat pembayaran');
+  $('#btn_detail').text('Simpan');
+    $('#btn_detail').on('click', function(){
+    $('#btn_detail').modal('hide')
+  });
+  $('#isi_table_detail').html('');
+
   $.ajax({
     url:base_url+'Simpanan_Pokok/getDetail/'+id,
     type:'GET',
     dataType : 'JSON',
     success : function(data){
-      console.log(data);
+      data.forEach((element, index) => {
+        index+=1
+        $('#isi_table_detail').append(`                            <tr>
+                                <td>${index}</td>
+                                <td>${element.tanggal_bayar}</td>
+                                <td>${element.nominal}</td>
+                            </tr>`)
+      });
+    }
+  })
+}
+
+
+function hapus_sp(id){
+  Swal.fire({
+    title: 'Yakin Menghapus Data ?',
+    text: "Data yang dihapus akan hilang secara permanen",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus',
+    cancelButtonText : 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+          url : base_url+'Simpanan_Pokok/hapus/'+id,
+          type : 'POST',
+          dataType : 'JSON',
+          success : function(data){
+            sukses(data.alert);
+            grid_all.ajax.reload();
+            grid_riwayat.ajax.reload();
+          }
+        })
     }
   })
 }
@@ -287,19 +339,19 @@ function detail_sp(id){
 
 
 function error(alert) {
-	Swal.fire({
-		icon: "error",
-		title: "Oops...",
-		text: alert,
-	});
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: alert,
+  });
 }
 
 function sukses(alert) {
-	Swal.fire({
-		icon: "success",
-		title: "Data Simpanan Pokok " + alert,
-		text: "",
-		timer: 1500,
-		showConfirmButton: false,
-	});
+  Swal.fire({
+    icon: "success",
+    title: "Data Simpanan Pokok " + alert,
+    text: "",
+    timer: 1500,
+    showConfirmButton: false,
+  });
 }

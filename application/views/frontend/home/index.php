@@ -90,15 +90,15 @@
              </div>
          </div>
          <div class="container mt-5" data-aos="fade-up" id="visimisi">
-             <div class="row">
-                 <div class="col-6">
+             <div class="row text-center justify-content-between">
+                 <div class="col-md-6">
                      <div class="visi">
                          <h2 style="text-align:center">VISI</h2>
                          <br>
                          <h3>Usaha Lancar Anggota Sejahtera</h3>
                      </div>
                  </div>
-                 <div class="col-6">
+                 <div class="col-md-6">
                      <div class="misi">
                          <h2 style="text-align:center">MISI</h2>
                          <br>
@@ -108,53 +108,52 @@
              </div>
          </div>
 
-
          <div class="container mt-5" data-aos="fade-up" id="anggota">
              <div class="section-title text-center">
                  <h2>Anggota</h2>
              </div>
              <div class="container mt-5" data-aos="fade-up" id="visimisi">
-                 <div class="row">
-                     <div class="col-3">
+                 <div class="row text-center justify-content-center">
+                     <div class="col-md-3">
                          <div class="j-dul">
                              <h4>Total Anggota</h4>
                          </div>
                          <div class="anggota">
-                             <h1 style="text-align:center">200</h1>
+                             <h1 style="text-align:center"><?= $total_anggota ?></h1>
                          </div>
                      </div>
-                     <div class="col-3">
+                     <div class="col-md-3">
                          <div class="j-dul">
                              <h4>Anggota Aktif</h4>
                          </div>
                          <div class="anggota">
-                             <h1>400</h1>
+                             <h1><?= $anggota_aktif ?></h1>
                          </div>
                      </div>
-                     <div class="col-3">
+                     <div class="col-md-3">
                          <div class="j-dul">
                              <h4>Anggota Tidak Aktif</h4>
                          </div>
                          <div class="anggota">
-                             <h1>20</h1>
+                             <h1><?= $anggota_tidak_aktif ?></h1>
                          </div>
                      </div>
-                     <div class="col-3">
+                     <div class="col-md-3">
                          <div class="j-dul">
                              <h4>Anggota Keluar</h4>
                          </div>
                          <div class="anggota">
-                             <h1>9</h1>
+                             <h1><?= $anggota_keluar ?></h1>
                          </div>
                      </div>
-                     <div class="col-3">
+<!--                      <div class="col-md-3">
                          <div class="j-dul">
                              <h4>Total Kendaraan Anggota</h4>
                          </div>
                          <div class="anggota">
                              <h1>9</h1>
                          </div>
-                     </div>
+                     </div> -->
                  </div>
              </div>
 
@@ -185,37 +184,47 @@
                      <h2>Kendaraan Pertrayek</h2>
                  </div>
                  <div class="container mt-5" data-aos="fade-up" id="visimisi">
-                     <div class="row">
-                         <div class="col-3">
+                    <div class="row text-center justify-content-center mb-4">
+                        <div class="col">
+                         <div class="j-dul">
+                             <h4>Total Kendaraan Anggota</h4>
+                         </div>
+                         <div class="anggota">
+                             <h1><?= $total_kendaraan ?></h1>
+                         </div>
+                     </div>
+                    </div>
+                     <div class="row text-center justify-content-center">
+                         <div class="col-md-3">
                              <div class="j-dul">
                                  <h4>Angkutan Perkotaan</h4>
                              </div>
                              <div class="anggota">
-                                 <h1 style="text-align:center">786</h1>
+                                 <h1 style="text-align:center"><?= $ak ?></h1>
                              </div>
                          </div>
-                         <div class="col-3">
+                         <div class="col-md-3">
                              <div class="j-dul">
                                  <h4>Angkutan Kota Dalam Provinsi</h4>
                              </div>
                              <div class="anggota">
-                                 <h1>349</h1>
+                                 <h1><?= $akdp ?></h1>
                              </div>
                          </div>
-                         <div class="col-3">
+                         <div class="col-md-3">
                              <div class="j-dul">
                                  <h4>Transpakuan</h4>
                              </div>
                              <div class="anggota">
-                                 <h1>146</h1>
+                                 <h1><?= $tpk ?></h1>
                              </div>
                          </div>
-                         <div class="col-3">
+                         <div class="col-md-3">
                              <div class="j-dul">
                                  <h4>Angkutan Barang</h4>
                              </div>
                              <div class="anggota">
-                                 <h1>883</h1>
+                                 <h1><?= $ab ?></h1>
                              </div>
                          </div>
                      </div>
