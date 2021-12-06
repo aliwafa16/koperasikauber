@@ -138,7 +138,7 @@ function riwayat(){
         render : function (data, type, full, meta){
             return `<div class="row">
                       <div class="col-md-12">
-                          <button onclick="detail_sp(${full.id_simpanan_pokok})" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
+                          <button onclick="detail_sp(${full.id_simpanan_pokok})" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
                       </div>
                   </div>`
         },

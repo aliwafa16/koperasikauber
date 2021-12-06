@@ -53,6 +53,18 @@ class Simpanan_Wajib extends CI_Controller
         echo json_encode($simpanan_wajib);
     }
 
+    public function get_riwayat()
+    {
+        $result = $this->Simpanan_Wajib_Model->riwayat();
+        echo json_encode($result);
+    }
+
+    public function getDetail($id)
+    {
+        $result = $this->db->get_where('tbl_sw_riwayat', ['id_simpanan_wajib' => $id])->result();
+        echo json_encode($result);
+    }
+
     public function addSimpananWajib(){
         $this->form_validation->set_rules('nominal', 'Nominal', 'required|trim', ['required' => 'Nominal harus diisi !!']);
         $this->form_validation->set_rules('nama_anggota', 'Nama Anggota', 'required|trim', ['required' => 'Nama harus diisi !!']);
@@ -111,25 +123,75 @@ class Simpanan_Wajib extends CI_Controller
                 're_nominal_error' => form_error('re_nominal'),
             ];
             echo json_encode($array);
-        }else{
-
-            $latest_pembayaran = $this->db->get_where('tbl_simpanan_wajib',['id_simpanan_wajib'=>$this->input->post('re_id_simpanan_wajib')])->row_array();
+        } else {
+            $id_simpanan_wajib = $this->input->post('re_id_simpanan_wajib');
+            $tanggal = $this->formatDate(date('d-m-Y H:i:s'));
+            $latest_pembayaran = $this->db->get_where('tbl_simpanan_wajib', ['id_simpanan_wajib' => $id_simpanan_wajib])->row_array();
 
             var_dump($latest_pembayaran);
 
-            // $nominal = intval($this->input->post('re_nominal'));
-            // $tagihan = intval($this->input->post('re_tagihan'));
-            // $credit = intval($this->input->post('re_credit'));
+            $nominal = intval($this->input->post('re_nominal'));
+            $tagihan = intval($this->input->post('re_tagihan'));
+            $credit = intval($this->input->post('re_credit'));
 
-            // if($credit!=0){
-            //    if($nominal>$credit){
-            //     $new_debet
-            //    }
-            // }else{
+            if ($credit != 0) {
+                if ($nominal >= $credit) {
+                    $new_debet = intval($latest_pembayaran['debet']) + $nominal;
+                    $new_credit = ($credit + $tagihan) - $nominal;
+                    $total = $new_debet;
+                } else if ($nominal <= $credit) {
+                    $new_debet = intval($latest_pembayaran['debet']) + $nominal;
+                    $new_credit = ($credit - $nominal) + $tagihan;
+                    $total = $new_debet;
+                }
+            } else {
+                if ($nominal <= $tagihan) {
+                    $new_debet = intval($latest_pembayaran['debet']) + $nominal;
+                    $new_credit = $tagihan - $nominal;
+                    $total = $new_debet;
+                } else if ($nominal == $tagihan) {
+                    $new_debet = intval($latest_pembayaran['debet']) + $nominal;
+                    $new_credit = 0;
+                    $total = $new_debet;
+                }
+            }
 
-            // }
+            $data = [
+                'kode_simpanan_wajib' => $this->input->post('re_kode_simpanan_wajib'),
+                'id_anggota' => $this->input->post('re_id_anggota'),
+                'created_at' => $this->input->post('re_created_at'),
+                'updated_at' => date('d-m-Y H:i:s'),
+                'debet' => $new_debet,
+                'credit' => $new_credit,
+                'total' => $total
+            ];
+            $this->Simpanan_Wajib_Model->pembayaran($data, $id_simpanan_wajib);
+
+            $data_riwayat = [
+                'id_simpanan_wajib' => $id_simpanan_wajib,
+                'nominal' => $nominal,
+                'tanggal' => $tanggal
+            ];
+
+
+            if ($this->Simpanan_Wajib_Model->addRiwayatSW($data_riwayat)) {
+                $result = ['status' => false, 'alert' => 'Gagal DiTambahkan'];
+            } else {
+                $result = ['status' => true, 'alert' => 'Berhasil Ditambahkan'];
+            }
+            echo json_encode($result);
         }
+    }
 
+    public function hapus($id)
+    {
+        $deleted = date('d-m-Y H:i:s');
+        $this->db->set('deleted_at', $deleted);
+        $this->db->where('id_simpanan_wajib', $id);
+        $this->db->update('tbl_simpanan_wajib');
+
+        $result = ['status' => true, 'alert' => 'Dihapus'];
+        echo json_encode($result);
     }
 
     public function getLatestPembayaran($id){

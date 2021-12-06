@@ -1,5 +1,6 @@
 $(document).ready(function(){
 simpananWajib();
+riwayat()
 });
 
 function simpananWajib(){
@@ -69,10 +70,88 @@ function simpananWajib(){
         render : function (data, type, full, meta){
             return `<div class="row">
                       <div class="col-md-12">
-                          <button onclick="detail_sp(${full.id_simpanan_wajib})" target="_blank" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
-                          <button onclick="hapus_sp(${full.id_simpanan_wajib})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                          <button onclick="detail_sw(${full.id_simpanan_wajib})" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
+                          <button onclick="hapus_sw(${full.id_simpanan_wajib})" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                       </div>
                   </div>`
+          },
+          className: "text-center"
+      }
+    ],
+  });
+}
+
+
+function riwayat(){
+     var table = $("#table_riwayat");
+    grid_riwayat = table.DataTable({
+    // scrollX: true,
+    // scrollCollapse: true,
+    aaSorting: [],
+    initComplete: function (settings, json) {},
+    retrieve: true,
+    processing: true,
+    ajax: {
+      type: "GET",
+      url: base_url + "Simpanan_Wajib/get_riwayat",
+      data: function (d) {
+        no = 0;
+      },
+      dataSrc: "",
+    },
+    columns: [
+      {
+        render: function (data, type, full, meta) {
+          no += 1;
+
+        return no;
+      },
+          className: "text-center"
+    },
+    {
+      render: function (data, type, full, meta) {
+        return full.kode_simpanan_wajib
+      },
+          className: "text-center"
+    },
+
+    {
+      render: function (data, type, full, meta) {
+        return full.nama_anggota
+      },
+          className: "text-center"
+    },
+    {
+      render: function (data, type, full, meta) {
+          return full.debet
+      },
+          className: "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
+            return full.credit
+        },
+      className: "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
+            return full.total
+        },
+      className: "text-center"
+    },
+    {
+    	render : function(data, type, full, meta){
+    		return `<div class="row">
+                      <div class="col-md-12">
+                          <button onclick="detail_sp(${full.id_simpanan_pokok})" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-info"></i></button>
+                      </div>
+                  </div>`
+    	},
+    	className : "text-center"
+    },
+    {
+        render : function (data, type, full, meta){
+            return full.deleted_at
           },
           className: "text-center"
       }
@@ -150,6 +229,7 @@ $('#submit_simpan_wajib').on('click',function(e){
           $('#form_simpanan_wajib')[0].reset();
           $('#simpananWajibModal').modal('hide');
           grid_all.ajax.reload()
+          grid_riwayat.ajax.reload()
         }else{
           $("#nama_anggota_error").html(data.nama_anggota_error);
           $("#kode_anggota_error").html(data.kode_anggota_error);
@@ -193,6 +273,32 @@ function addPembayaran(id){
 }
 
 
+function detail_sw(id){
+  $('#detailSWModal').modal('show');
+  $('#detailSWModalLabel').text('Riwayat pembayaran');
+  $('#btn_detail').text('Simpan');
+    $('#btn_detail').on('click', function(){
+    $('#btn_detail').modal('hide')
+  });
+  $('#isi_table_detail').html('');
+
+  $.ajax({
+    url:base_url+'Simpanan_Wajib/getDetail/'+id,
+    type:'GET',
+    dataType : 'JSON',
+    success : function(data){
+      data.forEach((element, index) => {
+        index+=1
+        $('#isi_table_detail').append(`                            <tr>
+                                <td>${index}</td>
+                                <td>${element.tanggal}</td>
+                                <td>${element.nominal}</td>
+                            </tr>`)
+      });
+    }
+  })
+}
+
 $('#submit_add_pembayaran').on('click',function(e){
   e.preventDefault();
 
@@ -205,11 +311,45 @@ $('#submit_add_pembayaran').on('click',function(e){
     contentType : false,
     processData : false,
     success : function(data){
-      console.log(data)
+      if(data.status){
+      $('#form_add_pembayaran')[0].reset();
+      $('#addPembayaranModal').modal('hide');
+      grid_all.ajax.reload()
+      grid_riwayat.ajax.reload();
+      }else{
+          $("#re_nominal_error").html(data.re_nominal_error);
+      }
     }
 
   })
 })
+
+
+function hapus_sw(id){
+  Swal.fire({
+    title: 'Yakin Menghapus Data ?',
+    text: "Data yang dihapus akan hilang secara permanen",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Hapus',
+    cancelButtonText : 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+          url : base_url+'Simpanan_Wajib/hapus/'+id,
+          type : 'POST',
+          dataType : 'JSON',
+          success : function(data){
+            sukses(data.alert);
+            grid_all.ajax.reload();
+            grid_riwayat.ajax.reload();
+          }
+        })
+    }
+  })
+}
 
 
 function error(alert) {
@@ -223,7 +363,7 @@ function error(alert) {
 function sukses(alert) {
   Swal.fire({
     icon: "success",
-    title: "Data Simpanan Pokok " + alert,
+    title: "Data Simpanan Wajib " + alert,
     text: "",
     timer: 1500,
     showConfirmButton: false,

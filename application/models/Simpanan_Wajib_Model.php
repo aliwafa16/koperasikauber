@@ -27,6 +27,18 @@ class Simpanan_Wajib_Model extends CI_Model {
 		return $this->db->affected_rows() > 1 ? true : false;
 	}
 
+	public function riwayat()
+	{
+		$this->db->select('tbl_simpanan_wajib.*,
+        tbl_anggota.id_anggota,
+        tbl_anggota.kode_anggota,
+        tbl_anggota.nama_anggota');
+		$this->db->from('tbl_simpanan_wajib');
+		$this->db->join('tbl_anggota', 'tbl_anggota.id_anggota=tbl_simpanan_wajib.id_anggota');
+		$this->db->where('tbl_simpanan_wajib.deleted_at !=', null);
+		return $this->db->get()->result();
+	}
+
 
 	public function latestPembayaran($id){
 		$this->db->select('tbl_simpanan_wajib.*, tbl_anggota.id_anggota, tbl_anggota.nama_anggota, tbl_anggota.kode_anggota');
@@ -34,5 +46,11 @@ class Simpanan_Wajib_Model extends CI_Model {
 		$this->db->join('tbl_anggota','tbl_anggota.id_anggota=tbl_simpanan_wajib.id_anggota');
 		$this->db->where('tbl_simpanan_wajib.id_simpanan_wajib', $id);
 		return $this->db->get()->row_array();
+	}
+
+	public function pembayaran($data, $id)
+	{
+		$this->db->where('id_simpanan_wajib', $id);
+		$this->db->update('tbl_simpanan_wajib', $data);
 	}
 }

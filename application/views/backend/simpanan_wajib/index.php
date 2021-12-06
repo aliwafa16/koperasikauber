@@ -51,28 +51,28 @@
                         </div>
                     </div>
 
-                <!--     <div class="tab-pane fade" id="riwayat" role="tabpanel">
+                    <div class="tab-pane fade" id="riwayat" role="tabpanel">
                         <p class="text-warning fs-4 pl-4" style="font-weight: bold;">Riwayat Simpanan Pokok</p>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush" id="table_riwayat" style="width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Kode Simpanan Pokok</th>
-                                        <th class="text-center">Tanggal Bayar</th>
+                                        <th class="text-center">Kode Simpanan Wajib</th>
                                         <th class="text-center">Nama Anggota</th>
                                         <th class="text-center">Debit (RP)</th>
                                         <th class="text-center">Credit (RP)</th>
                                         <th class="text-center">Total (RP)</th>
-                                        <th class="text-center">Tanggal Anggota Keluar</th>
+                                        <th class="text-center">Detail</th>
+                                        <th class="text-center">Tanggal dihapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
                         </div>
-                    </div> -->
-                    
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -200,6 +200,37 @@
                     <button type="button" id="submit_add_pembayaran" class="btn btn-primary">Save changes</button>
                 </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="detailSWModal" tabindex="-1" aria-labelledby="detailSWModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailSWModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table text-center" id="table_detail_sw">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Nominal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="isi_table_detail">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn_detail" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
